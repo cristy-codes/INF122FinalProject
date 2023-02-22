@@ -1,38 +1,49 @@
 import sys
+from PyQt6.QtWidgets import QApplication, QMainWindow, QLabel, QPushButton
+from PyQt6.QtGui import QScreen
+from PyQt6.QtGui import QGuiApplication
+from grid import GridDialog
 
-from PyQt6.QtCore import QSize, Qt
-from PyQt6.QtWidgets import QApplication, QMainWindow, QPushButton
+class GameSelection(QMainWindow):
+    def __init__(self, parent=None):
+        super(GameSelection, self).__init__(parent)
+        
+        # Create the title label
+        self.title = QLabel("Select a game:", self)
+        self.title.setGeometry(50, 50, 200, 30)
+        
+        # buttons for each game
+        self.mt_button = QPushButton("Match Tiles", self)
+        self.mt_button.setGeometry(50, 100, 100, 30)
+        self.mt_button.clicked.connect(self.select_game1)
+        
+        self.col_button = QPushButton("Columns", self)
+        self.col_button.setGeometry(50, 150, 100, 30)
+        self.col_button.clicked.connect(self.select_game2)
+        
+        # status label
+        self.status = QLabel("", self)
+        self.status.setGeometry(50, 200, 200, 30)
 
-from random import choice
+        # Set the window properties
+        self.setGeometry(100, 100, 300, 300)
+        self.setWindowTitle("Game Selection")
+        
+    def select_game1(self):
+        self.status.setText("Match Tiles selected")
+        dialog = GridDialog()
+        dialog.show()
+    
+    def select_game2(self):
+        self.status.setText("Columns selected")
+        dialog = GridDialog()
+        dialog.show()
+    
+def main():
+    app = QApplication(sys.argv)
+    window = GameSelection()
+    window.show()
+    sys.exit(app.exec())
 
-
-# Subclass QMainWindow to customize your application's main window
-class MainWindow(QMainWindow):
-    def __init__(self):
-        super().__init__()
-
-        self.setWindowTitle("Welcome!")
-
-        button = QPushButton("Press To Start!")
-
-        self.setFixedSize(QSize(400, 300))
-
-        # Set the central widget of the Window.
-        self.setCentralWidget(button)
-
-        button.setCheckable(True)
-        button.clicked.connect(self.the_button_was_clicked)
-
-        # Set the central widget of the Window.
-        self.setCentralWidget(button)
-
-    def the_button_was_clicked(self):
-        print("Clicked!")
-
-
-app = QApplication(sys.argv)
-
-window = MainWindow()
-window.show()
-
-app.exec()
+if __name__ == '__main__':
+    main()
