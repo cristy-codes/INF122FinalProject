@@ -1,5 +1,5 @@
 import sys
-from PyQt5.QtWidgets import QApplication, QWidget, QGridLayout, QPushButton
+from PyQt6.QtWidgets import QApplication, QWidget, QGridLayout, QPushButton
 from Board import Board
 
 

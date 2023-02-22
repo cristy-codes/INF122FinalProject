@@ -1,10 +1,10 @@
 import sys
 from PyQt6.QtWidgets import QApplication, QMainWindow, QLabel, QPushButton
-from grid import GridDialog
+from Grid import Grid
 
-class GameSelection(QMainWindow):
+class App(QMainWindow):
     def __init__(self, parent=None):
-        super(GameSelection, self).__init__(parent)
+        super(App, self).__init__(parent)
         
         # title label
         self.title = QLabel("Select a game:", self)
@@ -29,19 +29,19 @@ class GameSelection(QMainWindow):
         
     def select_mt(self):
         self.status.setText("Match Tiles selected")
-        dialog = GridDialog()
+        dialog = Grid()
         dialog.show()
         dialog.exec()
     
     def select_col(self):
         self.status.setText("Columns selected")
-        dialog = GridDialog()
+        dialog = Grid()
         dialog.show()
         dialog.exec()
     
 def main():
     app = QApplication(sys.argv)
-    window = GameSelection()
+    window = App()
     window.show()
     sys.exit(app.exec())
 
