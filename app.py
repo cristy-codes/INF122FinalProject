@@ -1,14 +1,12 @@
 import sys
 from PyQt6.QtWidgets import QApplication, QMainWindow, QLabel, QPushButton
-from PyQt6.QtGui import QScreen
-from PyQt6.QtGui import QGuiApplication
 from grid import GridDialog
 
 class GameSelection(QMainWindow):
     def __init__(self, parent=None):
         super(GameSelection, self).__init__(parent)
         
-        # Create the title label
+        # title label
         self.title = QLabel("Select a game:", self)
         self.title.setGeometry(50, 50, 200, 30)
         
