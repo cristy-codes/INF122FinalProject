@@ -15,11 +15,11 @@ class GameSelection(QMainWindow):
         # buttons for each game
         self.mt_button = QPushButton("Match Tiles", self)
         self.mt_button.setGeometry(50, 100, 100, 30)
-        self.mt_button.clicked.connect(self.select_game1)
+        self.mt_button.clicked.connect(self.select_mt)
         
         self.col_button = QPushButton("Columns", self)
         self.col_button.setGeometry(50, 150, 100, 30)
-        self.col_button.clicked.connect(self.select_game2)
+        self.col_button.clicked.connect(self.select_col)
         
         # status label
         self.status = QLabel("", self)
@@ -29,15 +29,17 @@ class GameSelection(QMainWindow):
         self.setGeometry(100, 100, 300, 300)
         self.setWindowTitle("Game Selection")
         
-    def select_game1(self):
+    def select_mt(self):
         self.status.setText("Match Tiles selected")
         dialog = GridDialog()
         dialog.show()
+        dialog.exec()
     
-    def select_game2(self):
+    def select_col(self):
         self.status.setText("Columns selected")
         dialog = GridDialog()
         dialog.show()
+        dialog.exec()
     
 def main():
     app = QApplication(sys.argv)
