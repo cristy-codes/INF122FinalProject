@@ -1,6 +1,7 @@
 import sys
-from PyQt6.QtWidgets import QApplication, QMainWindow, QLabel, QPushButton
+from PyQt5.QtWidgets import QApplication, QMainWindow, QLabel, QPushButton
 from Grid import Grid
+from ColumnsGame import ColumnsGame
 
 class App(QMainWindow):
     def __init__(self, parent=None):
@@ -35,7 +36,7 @@ class App(QMainWindow):
     
     def select_col(self):
         self.status.setText("Columns selected")
-        dialog = Grid()
+        dialog = ColumnsGame()
         dialog.show()
         dialog.exec()
     

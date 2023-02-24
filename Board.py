@@ -1,4 +1,4 @@
-from PyQt6.QtWidgets import QApplication, QWidget, QGridLayout, QPushButton
+from PyQt5.QtWidgets import QApplication, QWidget, QGridLayout, QPushButton
 from MemoryTile import MemoryTile
 import random
 

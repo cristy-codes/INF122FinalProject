@@ -1,17 +1,21 @@
-from PyQt5.QtWidgets import QApplication, QWidget, QGridLayout, QPushButton
+from PyQt5.QtWidgets import QPushButton
 
+"""
+Tile class : inherits from QPushButton
 
+@variable color:string - the color of the button
+"""
 class Tile(QPushButton):
     def __init__(self, color):
         super().__init__()
         self.color = color
         self.display()
 
-    def set(self, color):
+    def setColor(self, color):
         self.color = color
         self.display()
 
-    def get(self):
+    def getColor(self):
         return self.color
 
     def display(self):

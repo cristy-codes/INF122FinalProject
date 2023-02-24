@@ -1,5 +1,5 @@
 import sys
-from PyQt6.QtWidgets import QApplication, QDialog
+from PyQt5.QtWidgets import QApplication, QDialog
 
 class Grid(QDialog):
     def __init__(self):
