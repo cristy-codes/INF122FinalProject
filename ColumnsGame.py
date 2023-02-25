@@ -3,17 +3,14 @@ import sys
 from PyQt5.QtWidgets import QApplication, QDialog
 from ColumnsBoard import ColumnsBoard
 from ColumnsController import ColumnsController
-from ColumnsConditions import ColumnsConditions
 
 
 class ColumnsGame(QDialog):
-    def __init__(self, rows=24, cols=6):
+    def __init__(self, rows=24, cols=8):
         super().__init__()
-        self.conditions = ColumnsConditions()
-        self.controller = ColumnsController(self.conditions)
+        self.controller = ColumnsController()
         self.board = ColumnsBoard(rows, cols, self.controller.handler)
         self.controller.setBoard(self.board)
-        self.controller.start()
 
         self.setLayout(self.board)
         self.setWindowTitle("Columns")
