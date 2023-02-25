@@ -1,6 +1,7 @@
 from PyQt5.QtWidgets import QGridLayout, QLabel
 from ColumnsTile import ColumnsTile
 from PyQt5.QtCore import Qt
+from Board import Board
 
 
 """
@@ -11,9 +12,9 @@ ColumnsBoard : inherits from QGridLayout
 
 @variable table:ColumnsTile[][] - for storing the state of the board
 """
-class ColumnsBoard(QGridLayout):
+class ColumnsBoard(Board):
   def __init__(self, rows, cols, handler=print):
-    super().__init__()
+    super().__init__(rows, cols)
     self.rows = rows
     self.cols = cols
     self.handler = handler
@@ -66,3 +67,6 @@ class ColumnsBoard(QGridLayout):
 
   def createTile(self, row, col, color="white"):
     return ColumnsTile(color, row, col, self.handler)
+  
+  def get_colors(self):
+    return super().get_colors()

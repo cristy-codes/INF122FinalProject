@@ -14,8 +14,7 @@ class ColumnsConditions(GameConditions):
   def __init__(self, maxTime):
     super().__init__(maxTime)
     self.time = super().getMaxGameTime()
-    print(self.time)
-    self.colors = ["black", "cyan", "green", "red", "yellow", "magenta", "blue", "gray"]
+    # self.colors = ["black", "cyan", "green", "red", "yellow", "magenta", "blue", "gray"]
 
   # """
   # Color to set all tiles initially
@@ -45,15 +44,15 @@ class ColumnsConditions(GameConditions):
 
     return result
 
-  """
-  Event at the beggining of every turn
-  - moving to TurnEvent
-  """
-  def turnEvent(self, board:ColumnsBoard):
-    ### create new column
-    for i in range(3):
-      color = random.choice(self.colors)
-      board.column[i].setColor(color)
+  # """
+  # Event at the beggining of every turn
+  # - moving to TurnEvent
+  # """
+  # def turnEvent(self, board:ColumnsBoard):
+  #   ### create new column
+  #   for i in range(3):
+  #     color = random.choice(self.colors)
+  #     board.column[i].setColor(color)
 
   """
   Event to execute after click on tile

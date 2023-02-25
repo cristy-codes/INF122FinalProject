@@ -10,7 +10,7 @@ class ColumnsController:
   def __init__(self, conditions:ColumnsConditions):
     self.board = None
     self.conditions = conditions
-    self.columnsTurn = ColumnsTurn()
+    self.columnsTurn = ColumnsTurn() # im not too sure about this, it kinda seems like a copout to use ColumnsTurn like this
 
   def setBoard(self, board:ColumnsBoard):
     self.board = board
@@ -27,12 +27,10 @@ class ColumnsController:
       self.stop()
     ### iterate through another turn
     else:
-      self.conditions.turnEvent(self.board)
-      # self.columnsTurn.processTurn(self.board)
+      self.columnsTurn.processTurn(self.board)
 
   def start(self):
-    self.conditions.turnEvent(self.board)
-    # self.columnsTurn.processTurn(self.board)
+    self.columnsTurn.processTurn(self.board)
 
   def stop(self):
     for tileList in self.board.table:
