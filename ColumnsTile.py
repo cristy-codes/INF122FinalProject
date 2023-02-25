@@ -41,3 +41,4 @@ class ColumnsTile(Tile):
 
     def enable(self):
         self.clicked.connect(self.click)
+

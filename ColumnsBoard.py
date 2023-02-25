@@ -59,4 +59,3 @@ class ColumnsBoard(QGridLayout):
 
   def createTile(self, row, col):
     return ColumnsTile("white", row, col, self.handler)
-  

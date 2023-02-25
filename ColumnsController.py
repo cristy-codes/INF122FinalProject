@@ -25,3 +25,14 @@ class ColumnsController:
   def changeColor(self, tile:ColumnsTile, color):
     tile.setColor(color)
 
+  def start(self):
+    self.conditions.turnEvent(self.board)
+
+  def gameLoop(self):
+    self.conditions.turnEvent(self.board)
+    # Game is Lost
+    if (self.conditions.winCondition(self.board)):
+      print("WON")
+
+    if (self.conditions.loseCondition(self.board)):
+      print("LOST")
