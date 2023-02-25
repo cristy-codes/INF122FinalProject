@@ -26,7 +26,7 @@ class ColumnsConditions():
   def loseCondition(self, board:ColumnsBoard):
     result = False
 
-    ### check if there is a tile that doesn't have default color in fourth row
+    ### check if there is a tile doesn't have default color in fourth row
     for tile in board.table[3]:
       if (tile.getColor() != self.defaultColor()):
         result = True
@@ -53,9 +53,7 @@ class ColumnsConditions():
     self.swapColor(board.getTile(stop-2, tile.col), board.getTile(1, board.getCols()//2))
     self.swapColor(board.getTile(stop-1, tile.col), board.getTile(2, board.getCols()//2))
 
-
   def swapColor(self, tileFrom:ColumnsTile, tileTo:ColumnsTile):
     temp = tileFrom.getColor()
     tileFrom.setColor(tileTo.getColor())
     tileTo.setColor(temp)
-    

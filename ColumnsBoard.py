@@ -22,7 +22,7 @@ class ColumnsBoard(QGridLayout):
 
     # Create all Tile and assign to table
     for row in range(rows):
-      for col in range(cols - 2):
+      for col in range(cols):
         self.table[row][col] = self.createTile(row, col)
         self.addWidget(self.table[row][col], row, col)
 
@@ -56,4 +56,3 @@ class ColumnsBoard(QGridLayout):
 
   def createTile(self, row, col, color="white"):
     return ColumnsTile(color, row, col, self.handler)
-  
