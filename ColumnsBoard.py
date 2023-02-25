@@ -30,7 +30,7 @@ class ColumnsBoard(QGridLayout):
   def getCols(self):
     return self.cols
 
-  def getTile(self, row:int, col:int) -> ColumnsTile | None:
+  def getTile(self, row:int, col:int) -> ColumnsTile:
     return self.table[row][col]
   
   def addTile(self, row:int, col:int):
@@ -47,6 +47,6 @@ class ColumnsBoard(QGridLayout):
       self.removeWidget(self.table[row][col])
       self.table[row][col] = None
 
-  def createTile(self, row, col):
-    return ColumnsTile("white", row, col, self.handler)
+  def createTile(self, row, col, color="white"):
+    return ColumnsTile(color, row, col, self.handler)
   
