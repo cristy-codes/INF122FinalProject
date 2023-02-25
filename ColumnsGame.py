@@ -7,9 +7,9 @@ from ColumnsConditions import ColumnsConditions
 
 
 class ColumnsGame(QDialog):
-    def __init__(self, rows=24, cols=6):
+    def __init__(self, rows=24, cols=6, maxTime=100):
         super().__init__()
-        self.conditions = ColumnsConditions()
+        self.conditions = ColumnsConditions(maxTime)
         self.controller = ColumnsController(self.conditions)
         self.board = ColumnsBoard(rows, cols, self.controller.handler)
         self.controller.setBoard(self.board)

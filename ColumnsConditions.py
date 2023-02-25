@@ -1,6 +1,7 @@
 import random
 from ColumnsBoard import ColumnsBoard
 from ColumnsTile import ColumnsTile
+from GameConditions import GameConditions
 
 """
 ColumnsConditions sets the conditions for the game
@@ -9,42 +10,37 @@ ColumnsConditions sets the conditions for the game
 @method loseCondition - the condition to check if the game is lost
 @method turnCondition - the condition to run for each turn
 """
-class ColumnsConditions():
-  def __init__(self):
-    self.time = 100_000
+class ColumnsConditions(GameConditions):
+  def __init__(self, maxTime):
+    super().__init__(maxTime)
+    self.time = super().getMaxGameTime()
+    print(self.time)
     self.colors = ["black", "cyan", "green", "red", "yellow", "magenta", "blue", "gray"]
 
-  """
-  Color to set all tiles initially
-  - should probably move to ColumnsTile
-  """
-  def getDefaultColor(self):
-    return "white"
+  # """
+  # Color to set all tiles initially
+  # - should probably move to ColumnsTile
+  # """
+  # def getDefaultColor(self):
+  #   return "white"
 
   """
   Maximum allowed time to run game
-  - moving to GameConditions
   """
   def maxTime(self):
     return self.time
 
   """
-  Condition to meet if a win
-  - moving to GameConditions
+  Condition to meet for the game to end
   """
-  def winCondition(self, board:ColumnsBoard):
-    return False
-
-  """
-  Condition to meet if a lose
-  - moving to GameConditions
-  """
-  def loseCondition(self, board:ColumnsBoard):
+  def determineGameOver(self, board:ColumnsBoard):
     result = False
 
-    ### check if there is a tile doesn't have default color in fourth row
-    for tile in board.table[3]:
-      if (tile.getColor() != self.getDefaultColor()):
+    ### check for timer value here
+
+    ### check if there is a tile doesn't have default color in top row
+    for tile in board.table[0]:
+      if (tile.getColor() != tile.getDefaultColor()):
         result = True
 
     return result
@@ -61,7 +57,6 @@ class ColumnsConditions():
 
   """
   Event to execute after click on tile
-  - should probably be moved to ColumnsTile
   """
   def clickEvent(self, tile:ColumnsTile, board:ColumnsBoard):
     ### moves the tiles down
@@ -69,7 +64,7 @@ class ColumnsConditions():
 
     while True:
       if (stop == board.getRows() or
-          board.getTile(stop, tile.col).getColor() != self.getDefaultColor()): # there's a colored block or is last row
+          board.getTile(stop, tile.col).getColor() != tile.getDefaultColor()): # there's a colored block or is last row
         break
       stop += 1
 
