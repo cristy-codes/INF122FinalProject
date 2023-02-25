@@ -16,47 +16,52 @@ class ColumnsConditions():
 
   """
   Color to set all tiles initially
+  - should probably move to ColumnsTile
   """
-  def defaultColor(self):
+  def getDefaultColor(self):
     return "white"
 
   """
   Maximum allowed time to run game
+  - moving to GameConditions
   """
   def maxTime(self):
     return self.time
 
   """
   Condition to meet if a win
+  - moving to GameConditions
   """
   def winCondition(self, board:ColumnsBoard):
     return False
 
   """
   Condition to meet if a lose
+  - moving to GameConditions
   """
   def loseCondition(self, board:ColumnsBoard):
     result = False
 
     ### check if there is a tile doesn't have default color in fourth row
     for tile in board.table[3]:
-      if (tile.getColor() != self.defaultColor()):
+      if (tile.getColor() != self.getDefaultColor()):
         result = True
 
     return result
 
   """
   Event at the beggining of every turn
+  - moving to TurnEvent
   """
   def turnEvent(self, board:ColumnsBoard):
     ### create new column
     for i in range(3):
       color = random.choice(self.colors)
-      board.getTile(i, board.getCols()//2).setColor(color)
       board.column[i].setColor(color)
 
   """
   Event to execute after click on tile
+  - should probably be moved to ColumnsTile
   """
   def clickEvent(self, tile:ColumnsTile, board:ColumnsBoard):
     ### moves the tiles down
@@ -64,13 +69,14 @@ class ColumnsConditions():
 
     while True:
       if (stop == board.getRows() or
-          board.getTile(stop, tile.col).getColor() != self.defaultColor()): # there's a colored block or is last row
+          board.getTile(stop, tile.col).getColor() != self.getDefaultColor()): # there's a colored block or is last row
         break
       stop += 1
 
-    self.swapColor(board.getTile(stop-3, tile.col), board.getTile(0, board.getCols()//2))
-    self.swapColor(board.getTile(stop-2, tile.col), board.getTile(1, board.getCols()//2))
-    self.swapColor(board.getTile(stop-1, tile.col), board.getTile(2, board.getCols()//2))
+    # swap the three lowest uncolored tiles with the three queued tiles
+    self.swapColor(board.getTile(stop-3, tile.col), board.column[0])
+    self.swapColor(board.getTile(stop-2, tile.col), board.column[1])
+    self.swapColor(board.getTile(stop-1, tile.col), board.column[2])
 
   """
   System for points and game logic, such as erasing each match and adding score.
