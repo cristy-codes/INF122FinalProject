@@ -57,5 +57,6 @@ class ColumnsBoard(QGridLayout):
       self.removeWidget(self.table[row][col])
       self.table[row][col] = None
 
-  def createTile(self, row, col):
-    return ColumnsTile("white", row, col, self.handler)
+  def createTile(self, row, col, color="white"):
+    return ColumnsTile(color, row, col, self.handler)
+  
