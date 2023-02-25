@@ -1,6 +1,6 @@
 import sys
 
-from PyQt5.QtWidgets import QApplication, QWidget, QDialog
+from PyQt5.QtWidgets import QApplication, QWidget, QDialog, QPushButton
 from Board import Board
 
 class MemoryGame(QDialog):
@@ -12,6 +12,9 @@ class MemoryGame(QDialog):
         self.setLayout(grid)
         self.setWindowTitle("Match Tiles Game")
         self.setGeometry(50, 50, 200, 200)
+
+        grid.reveal()
+
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
