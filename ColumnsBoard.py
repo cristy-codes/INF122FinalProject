@@ -12,24 +12,34 @@ ColumnsBoard : inherits from QGridLayout
 @variable table:ColumnsTile[][] - for storing the state of the board
 """
 class ColumnsBoard(QGridLayout):
-  def __init__(self, rows=24, cols=8, handler=print):
+  def __init__(self, rows, cols, handler=print):
     super().__init__()
     self.rows = rows
     self.cols = cols
     self.handler = handler
     self.table = [[None for _ in range(cols)] for _ in range(rows)]
-    scoreLabel = QLabel("Temp Score")
+    self.setBoard()
+    self.setStatus()
 
-    # Create all Tile and assign to table
-    for row in range(rows):
-      for col in range(cols):
+  # Create all Tile and assign to table
+  def setBoard(self):
+    for row in range(self.rows):
+      for col in range(self.cols):
         self.table[row][col] = self.createTile(row, col)
         self.addWidget(self.table[row][col], row, col)
 
-    self.addWidget(scoreLabel, 0, 6, 1, 2, Qt.Alignment())
-    self.addWidget(self.createTile(1, 7), 1, 7)
-    self.addWidget(self.createTile(2, 7), 2, 7)
-    self.addWidget(self.createTile(3, 7), 3, 7)
+
+  def setStatus(self):
+    self.scoreLabel = QLabel("Temp Score")
+    self.column = [ColumnsTile("white", 0, 0),
+                   ColumnsTile("white", 0, 0),
+                   ColumnsTile("white", 0, 0)]
+    
+    self.addWidget(self.scoreLabel, 0, self.cols, 2, 4, Qt.Alignment())
+    self.addWidget(self.column[0], 2, self.cols+2)
+    self.addWidget(self.column[1], 3, self.cols+2)
+    self.addWidget(self.column[2], 4, self.cols+2)
+
 
   def getRows(self):
     return self.rows

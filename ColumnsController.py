@@ -15,19 +15,26 @@ class ColumnsController:
 
   def handler(self, tile:ColumnsTile):
     self.conditions.clickEvent(tile, self.board)
+    self.conditions.pointSystem(self.board)
     self.gameLoop()
 
-  def changeColor(self, tile:ColumnsTile, color):
-    tile.setColor(color)
+  def gameLoop(self):
+    # Game is Lost
+    if (self.conditions.winCondition(self.board)):
+      print("WON")
+      self.stop()
+    elif (self.conditions.loseCondition(self.board)):
+      print("LOST")
+      self.stop()
+    else:
+      self.conditions.turnEvent(self.board)
 
   def start(self):
     self.conditions.turnEvent(self.board)
 
-  def gameLoop(self):
-    self.conditions.turnEvent(self.board)
-    # Game is Lost
-    if (self.conditions.winCondition(self.board)):
-      print("WON")
+  def stop(self):
+    for tileList in self.board.table:
+      for tile in tileList:
+        tile.disable()
 
-    if (self.conditions.loseCondition(self.board)):
-      print("LOST")
+  

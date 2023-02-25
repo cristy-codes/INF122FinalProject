@@ -2,11 +2,11 @@ class Score():
     def __init__(self):
         self.currentScore = 0
     
-    def addPoints(points:int):
+    def addPoints(self, points:int):
         self.currentScore += points 
     
-    def subtractPoints(points:int):
+    def subtractPoints(self, points:int):
         self.currentScore -= points
 
-    def getCurrentPoints():
+    def getCurrentPoints(self):
         return self.currentScore

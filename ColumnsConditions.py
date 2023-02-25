@@ -14,15 +14,27 @@ class ColumnsConditions():
     self.time = 100_000
     self.colors = ["black", "cyan", "green", "red", "yellow", "magenta", "blue", "gray"]
 
+  """
+  Color to set all tiles initially
+  """
   def defaultColor(self):
     return "white"
 
+  """
+  Maximum allowed time to run game
+  """
   def maxTime(self):
     return self.time
 
+  """
+  Condition to meet if a win
+  """
   def winCondition(self, board:ColumnsBoard):
     return False
 
+  """
+  Condition to meet if a lose
+  """
   def loseCondition(self, board:ColumnsBoard):
     result = False
 
@@ -33,12 +45,19 @@ class ColumnsConditions():
 
     return result
 
+  """
+  Event at the beggining of every turn
+  """
   def turnEvent(self, board:ColumnsBoard):
     ### create new column
     for i in range(3):
       color = random.choice(self.colors)
       board.getTile(i, board.getCols()//2).setColor(color)
+      board.column[i].setColor(color)
 
+  """
+  Event to execute after click on tile
+  """
   def clickEvent(self, tile:ColumnsTile, board:ColumnsBoard):
     ### moves the tiles down
     stop = 3
@@ -53,6 +72,13 @@ class ColumnsConditions():
     self.swapColor(board.getTile(stop-2, tile.col), board.getTile(1, board.getCols()//2))
     self.swapColor(board.getTile(stop-1, tile.col), board.getTile(2, board.getCols()//2))
 
+  """
+  System for points and game logic, such as erasing each match and adding score.
+  """
+  def pointSystem(self, board:ColumnsBoard):
+    pass
+
+  ### HELPER functions
   def swapColor(self, tileFrom:ColumnsTile, tileTo:ColumnsTile):
     temp = tileFrom.getColor()
     tileFrom.setColor(tileTo.getColor())
