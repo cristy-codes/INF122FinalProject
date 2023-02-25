@@ -26,13 +26,10 @@ class ColumnsBoard(QGridLayout):
         self.table[row][col] = self.createTile(row, col)
         self.addWidget(self.table[row][col], row, col)
 
-    # self.addWidget(self.createTile(0, 6), 0, 6)
-
     self.addWidget(scoreLabel, 0, 6, 1, 2, Qt.Alignment())
     self.addWidget(self.createTile(1, 7), 1, 7)
     self.addWidget(self.createTile(2, 7), 2, 7)
     self.addWidget(self.createTile(3, 7), 3, 7)
-
 
   def getRows(self):
     return self.rows
@@ -40,7 +37,7 @@ class ColumnsBoard(QGridLayout):
   def getCols(self):
     return self.cols
 
-  def getTile(self, row:int, col:int) -> ColumnsTile | None:
+  def getTile(self, row:int, col:int) -> ColumnsTile:
     return self.table[row][col]
   
   def addTile(self, row:int, col:int):
