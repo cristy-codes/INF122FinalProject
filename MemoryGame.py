@@ -10,7 +10,7 @@ class MemoryGame(QDialog):
         grid = Board()
 
         self.setLayout(grid)
-        self.setWindowTitle("122 A4")
+        self.setWindowTitle("Match Tiles Game")
         self.setGeometry(50, 50, 200, 200)
 
 if __name__ == '__main__':
