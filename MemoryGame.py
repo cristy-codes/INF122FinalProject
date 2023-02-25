@@ -1,20 +1,20 @@
 import sys
-from PyQt5.QtWidgets import QApplication, QWidget, QGridLayout, QPushButton
+
+from PyQt5.QtWidgets import QApplication, QWidget, QDialog
 from Board import Board
 
+class MemoryGame(QDialog):
+    def __init__(self):
+        super().__init__()
 
-def window():
-    app = QApplication(sys.argv)
-    win = QWidget()
+        grid = Board()
 
-    grid = Board()
-
-    win.setLayout(grid)
-    win.setWindowTitle("122 A4")
-    win.setGeometry(50, 50, 200, 200)
-    win.show()
-    sys.exit(app.exec())
-
+        self.setLayout(grid)
+        self.setWindowTitle("122 A4")
+        self.setGeometry(50, 50, 200, 200)
 
 if __name__ == '__main__':
-    window()
+    app = QApplication(sys.argv)
+    window = MemoryGame()
+    window.show()
+    sys.exit(app.exec())

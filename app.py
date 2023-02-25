@@ -1,6 +1,6 @@
 import sys
 from PyQt5.QtWidgets import QApplication, QMainWindow, QLabel, QPushButton
-from Grid import Grid
+from MemoryGame import MemoryGame
 from ColumnsGame import ColumnsGame
 
 class App(QMainWindow):
@@ -30,21 +30,21 @@ class App(QMainWindow):
         
     def select_mt(self):
         self.status.setText("Match Tiles selected")
-        dialog = Grid()
+        dialog = MemoryGame()
         dialog.show()
-        dialog.exec()
+        dialog.exec_()
     
     def select_col(self):
         self.status.setText("Columns selected")
         dialog = ColumnsGame()
         dialog.show()
-        dialog.exec()
+        dialog.exec_()
     
 def main():
     app = QApplication(sys.argv)
     window = App()
     window.show()
-    sys.exit(app.exec())
+    sys.exit(app.exec_())
 
 if __name__ == '__main__':
     main()
