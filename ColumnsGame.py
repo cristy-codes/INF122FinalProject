@@ -22,3 +22,4 @@ if __name__ == '__main__':
     window = ColumnsGame()
     window.show()
     sys.exit(app.exec())
+

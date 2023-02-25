@@ -58,3 +58,4 @@ class ColumnsConditions():
     temp = tileFrom.getColor()
     tileFrom.setColor(tileTo.getColor())
     tileTo.setColor(temp)
+    
