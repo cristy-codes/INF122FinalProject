@@ -1,7 +1,7 @@
-from Board import Board
-from GameConditions import GameConditions
-from Tile import Tile
-from TurnEvent import TurnEvent
+from BaseGame.Board import Board
+from BaseGame.GameConditions import GameConditions
+from BaseGame.Tile import Tile
+from BaseGame.TurnEvent import TurnEvent
 
 class GameController:
     def __init__(self, conditions:GameConditions, turn:TurnEvent):

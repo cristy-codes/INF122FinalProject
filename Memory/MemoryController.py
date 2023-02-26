@@ -1,5 +1,5 @@
-from GameController import GameController
-from Tile import Tile
+from BaseGame.GameController import GameController
+from BaseGame.Tile import Tile
 
 
 class MemoryController(GameController):

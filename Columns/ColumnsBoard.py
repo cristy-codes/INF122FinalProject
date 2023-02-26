@@ -1,7 +1,7 @@
-from PyQt5.QtWidgets import QGridLayout, QLabel
-from ColumnsTile import ColumnsTile
+from PyQt5.QtWidgets import QLabel
+from Columns.ColumnsTile import ColumnsTile
 from PyQt5.QtCore import Qt
-from Board import Board
+from BaseGame.Board import Board
 
 
 """

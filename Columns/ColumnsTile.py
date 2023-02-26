@@ -1,4 +1,4 @@
-from Tile import Tile
+from BaseGame.Tile import Tile
 
 """
 ColumnsTile : inherits from Tile

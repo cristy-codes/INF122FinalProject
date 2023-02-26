@@ -1,8 +1,6 @@
-from ColumnsBoard import ColumnsBoard
-from ColumnsTile import ColumnsTile
-from ColumnsConditions import ColumnsConditions
-from ColumnsTurn import ColumnsTurn
-from GameController import GameController
+from Columns.ColumnsConditions import ColumnsConditions
+from Columns.ColumnsTurn import ColumnsTurn
+from BaseGame.GameController import GameController
 
 """
 ColumnsController class

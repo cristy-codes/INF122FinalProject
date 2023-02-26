@@ -1,4 +1,4 @@
-from GameConditions import GameConditions
+from BaseGame.GameConditions import GameConditions
 
 from Memory.MemoryTile import MemoryTile
 from Memory.MemoryBoard import MemoryBoard

@@ -1,4 +1,4 @@
-from TurnEvent import TurnEvent
+from BaseGame.TurnEvent import TurnEvent
 from Memory.MemoryBoard import MemoryBoard
 
 

@@ -1,10 +1,10 @@
 import sys
 
 from PyQt5.QtWidgets import QApplication, QDialog
-from ColumnsBoard import ColumnsBoard
-from ColumnsController import ColumnsController
-from ColumnsConditions import ColumnsConditions
-from ColumnsTurn import ColumnsTurn
+from Columns.ColumnsBoard import ColumnsBoard
+from Columns.ColumnsController import ColumnsController
+from Columns.ColumnsConditions import ColumnsConditions
+from Columns.ColumnsTurn import ColumnsTurn
 
 
 class ColumnsGame(QDialog):

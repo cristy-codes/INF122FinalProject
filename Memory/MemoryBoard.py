@@ -1,8 +1,6 @@
-import math
 import random
-from abc import ABC
 
-from Board import Board
+from BaseGame.Board import Board
 from Memory.MemoryTile import MemoryTile
 
 

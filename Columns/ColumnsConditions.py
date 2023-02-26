@@ -1,7 +1,6 @@
-import random
-from ColumnsBoard import ColumnsBoard
-from ColumnsTile import ColumnsTile
-from GameConditions import GameConditions
+from Columns.ColumnsBoard import ColumnsBoard
+from Columns.ColumnsTile import ColumnsTile
+from BaseGame.GameConditions import GameConditions
 
 """
 ColumnsConditions sets the conditions for the game
