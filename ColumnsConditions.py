@@ -13,7 +13,7 @@ ColumnsConditions sets the conditions for the game
 class ColumnsConditions(GameConditions):
   def __init__(self, maxTime):
     super().__init__(maxTime)
-    self.time = super().getMaxGameTime()
+    # self.time = super().getMaxGameTime()
     # self.colors = ["black", "cyan", "green", "red", "yellow", "magenta", "blue", "gray"]
 
   # """
@@ -23,11 +23,11 @@ class ColumnsConditions(GameConditions):
   # def getDefaultColor(self):
   #   return "white"
 
-  """
-  Maximum allowed time to run game
-  """
-  def maxTime(self):
-    return self.time
+  # """
+  # Maximum allowed time to run game
+  # """
+  # def maxTime(self):
+  #   return self.time
 
   """
   Condition to meet for the game to end
@@ -62,7 +62,7 @@ class ColumnsConditions(GameConditions):
     stop = 3
 
     while True:
-      if (stop == board.getRows() or
+      if (stop == board.get_rows() or
           board.getTile(stop, tile.col).getColor() != tile.getDefaultColor()): # there's a colored block or is last row
         break
       stop += 1

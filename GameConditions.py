@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 
-class GameConditions(ABC):
+class GameConditions():
     def __init__(self, maxTime):
         self.maxGameTime = maxTime
     
@@ -12,4 +12,12 @@ class GameConditions(ABC):
 
     @abstractmethod
     def determineGameOver(self):
+        pass
+
+    @abstractmethod
+    def clickEvent(self):
+        pass
+
+    @abstractmethod
+    def pointSystem(self):
         pass
