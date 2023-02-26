@@ -29,6 +29,9 @@ class ColumnsBoard(Board):
         self.table[row][col] = self.createTile(row, col)
         self.addWidget(self.table[row][col], row, col)
 
+  def createTile(self, row, col, color="white"):
+    return ColumnsTile(color, row, col, self.handler)
+
   def setStatus(self):
     self.scoreLabel = QLabel("Temp Score")
     self.column = [ColumnsTile("white", 0, 0),
@@ -57,8 +60,4 @@ class ColumnsBoard(Board):
   #     self.removeWidget(self.table[row][col])
   #     self.table[row][col] = None
 
-  def createTile(self, row, col, color="white"):
-    return ColumnsTile(color, row, col, self.handler)
   
-  def get_colors(self):
-    return super().get_colors()

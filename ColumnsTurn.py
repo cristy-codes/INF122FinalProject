@@ -3,8 +3,8 @@ from ColumnsBoard import ColumnsBoard
 import random
 
 class ColumnsTurn(TurnEvent):
-    def __init__(self):
-        pass
+    # def __init__(self):
+    #     pass
 
     def processTurn(self, board:ColumnsBoard):
         ### create new column
