@@ -9,7 +9,6 @@ ColumnsController class
 """
 class ColumnsController(GameController):
   def __init__(self, conditions:ColumnsConditions, columnsTurn:ColumnsTurn):
-    # self.columnsTurn = ColumnsTurn()  # im not too sure about this, it kinda seems like a copout to use ColumnsTurn like this
     super().__init__(conditions, columnsTurn)
     # self.board = None
     # self.conditions = conditions
