@@ -1,5 +1,7 @@
 import random
 
+from PyQt5.QtCore import QTimer
+
 from BaseGame.Board import Board
 from Memory.MemoryTile import MemoryTile
 
@@ -12,12 +14,14 @@ class MemoryBoard(Board):
         self.handler = handler
         self.board_colors = []
         self.hiddenTiles = len(self.get_colors()) * 2
+        self.buttons = []
 
         for color in self.get_colors():
             self.board_colors.append(color)
             self.board_colors.append(color)
 
         self.setBoard()
+        self.reveal()
 
     def createTile(self, row, col, color="white"):
         back_color = random.choice(self.board_colors)
@@ -33,7 +37,9 @@ class MemoryBoard(Board):
 
         for i in range(self.get_rows()):
             for j in range(self.get_cols()):
-                self.addWidget(self.createTile(i, j), i, j)
+                tile = self.createTile(i, j)
+                self.addWidget(tile, i, j)
+                self.buttons.append(tile)
 
     def determineGameOver(self):
         pass
@@ -43,3 +49,12 @@ class MemoryBoard(Board):
 
     def pointSystem(self):
         pass
+
+    def reveal(self):
+        for button in self.buttons:
+            button.flip()
+        QTimer.singleShot(1000, self.hide_tiles)
+
+    def hide_tiles(self):
+        for button in self.buttons:
+            button.flip()
