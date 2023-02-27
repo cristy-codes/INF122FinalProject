@@ -1,19 +1,26 @@
-from Tile import Tile
+from PyQt5.QtWidgets import QPushButton
 
 """
-ColumnsTile : inherits from Tile
+Tile class : inherits from QPushButton
 
-@variable row:int - row of the tile
-@variable col:int - col of the tile
-@variable callback:int - function to call for clickEvent
+@variable color:string - the color of the button
 """
-class ColumnsTile(Tile):
+class Tile(QPushButton):
     def __init__(self, color, row, col, callback:callable=print):
-        super().__init__(color)
+        super().__init__()
         self.row = row
         self.col = col
+        self.color = color
+        self.display()
         self.callback = callback
         self.enable()
+
+    def setColor(self, color):
+        self.color = color
+        self.display()
+
+    def getColor(self):
+        return self.color
 
     def setRow(self, row):
         self.row = row
@@ -26,7 +33,13 @@ class ColumnsTile(Tile):
 
     def getCol(self) -> int:
         return self.col
-    
+
+    def disable(self):
+        self.clicked.disconnect()
+
+    def enable(self):
+        self.clicked.connect(self.click)
+
     def setCallback(self, callback):
         self.callback = callback
 
@@ -36,9 +49,5 @@ class ColumnsTile(Tile):
     def click(self):
         self.callback(self)
 
-    def disable(self):
-        self.clicked.disconnect()
-
-    def enable(self):
-        self.clicked.connect(self.click)
-
+    def display(self):
+        self.setStyleSheet("background-color : " + self.color)

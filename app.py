@@ -1,7 +1,7 @@
 import sys
 from PyQt5.QtWidgets import QApplication, QMainWindow, QLabel, QPushButton
-from MemoryGame import MemoryGame
-from ColumnsGame import ColumnsGame
+from Memory.MemoryGame import MemoryGame
+from Columns.ColumnsGame import ColumnsGame
 
 class App(QMainWindow):
     def __init__(self, parent=None):
