@@ -5,7 +5,9 @@ class MemoryTile(Tile):
     def __init__(self, color, back_color, row, col, callback: callable = print):
         super().__init__(color, row, col, callback)
         self.back_color = back_color
+        self.color = color
         self.connect = True
+        self.face_down = True
 
     def set_back_color(self, color):
         self.back_color = color

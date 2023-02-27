@@ -37,9 +37,9 @@ class MemoryBoard(Board):
 
         for i in range(self.get_rows()):
             for j in range(self.get_cols()):
-                tile = self.createTile(i, j)
-                self.addWidget(tile, i, j)
-                self.buttons.append(tile)
+                new_tile = self.createTile(i, j)
+                self.addWidget(new_tile, i, j)
+                self.buttons.append(new_tile)
 
     def determineGameOver(self):
         pass
