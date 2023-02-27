@@ -13,6 +13,9 @@ class Board(QGridLayout):
             self.colors.append(color)
 
         self.buttons = []
+        self.clicked_buttons = []
+        self.matched_buttons = []
+
         for i in range(rows):
             for j in range(cols):
                 color = random.choice(self.colors)
@@ -37,12 +40,26 @@ class Board(QGridLayout):
 
     def hide_tiles(self):
         for button in self.buttons:
-            button.setStyleSheet("background-color: white")
+            if button not in self.matched_buttons:
+                button.setStyleSheet("background-color: white")
 
     def button_clicked(self):
         button = self.sender()
         if button.color != "white":
             button.setStyleSheet(f"background-color: {button.color}")
             button.setEnabled(False)
-        else:
-            QMessageBox.warning(self.parent(), "Match Tiles Game", "Please select a tile with color.")
+            self.clicked_buttons.append(button)
+            if len(self.clicked_buttons) == 2:
+                if self.clicked_buttons[0].color == self.clicked_buttons[1].color:
+                    self.matched_buttons.extend(self.clicked_buttons)
+                    self.clicked_buttons = []
+                    if len(self.matched_buttons) == len(self.buttons):
+                        QMessageBox.information(self.parent(), "Match Tiles Game", "You won!")
+                else:
+                    QTimer.singleShot(1000, self.hide_clicked_buttons)
+
+    def hide_clicked_buttons(self):
+        for button in self.clicked_buttons:
+            button.setStyleSheet("background-color: white")
+            button.setEnabled(True)
+        self.clicked_buttons = []
