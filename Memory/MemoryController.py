@@ -4,6 +4,8 @@ from PyQt5.QtWidgets import QMessageBox
 from BaseGame.GameController import GameController
 from BaseGame.Tile import Tile
 
+from Memory.MemoryVictory import MemoryVictory
+
 import time
 
 
@@ -28,7 +30,7 @@ class MemoryController(GameController):
                     self.matched_buttons.extend(self.clicked_buttons)
                     self.clicked_buttons = []
                     if len(self.matched_buttons) == self.total_buttons:
-                        print("You win!")
+                        MemoryVictory("You won!")
                 else:
                     QTimer.singleShot(1000, self.hide_clicked_buttons)
 
