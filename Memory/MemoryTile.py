@@ -5,6 +5,7 @@ class MemoryTile(Tile):
     def __init__(self, color, back_color, row, col, callback: callable = print):
         super().__init__(color, row, col, callback)
         self.back_color = back_color
+        self.connect = True
 
     def set_back_color(self, color):
         self.back_color = color
@@ -17,6 +18,11 @@ class MemoryTile(Tile):
         self.back_color = self.color
         self.color = temp
         self.display()
+
+    def disable(self):
+        if self.connect:
+            self.connect = False
+            self.clicked.disconnect()
 
     def match(self, other_tile):
         if self.color == other_tile.color:
