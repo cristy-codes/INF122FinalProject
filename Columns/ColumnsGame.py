@@ -23,10 +23,9 @@ class ColumnsGame(QDialog):
         self.setWindowTitle("Columns")
         self.setGeometry(50, 50, 200, 200)
 
-        
+
 if __name__ == '__main__':
     app = QApplication(sys.argv)
     window = ColumnsGame()
     window.show()
     sys.exit(app.exec())
-
