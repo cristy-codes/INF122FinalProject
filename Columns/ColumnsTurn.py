@@ -7,5 +7,5 @@ class ColumnsTurn(TurnEvent):
     def processTurn(self, board: ColumnsBoard):
         ### create new column
         for i in range(3):
-            color = random.choice(board.get_colors())
+            color = random.choice(board.get_colors()[1:6])
             board.column[i].setColor(color)
