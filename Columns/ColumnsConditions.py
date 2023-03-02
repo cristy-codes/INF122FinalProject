@@ -39,7 +39,7 @@ class ColumnsConditions(GameConditions):
   # remove matching tiles and continue drop and get points
   def pointSystem(self, score:Score, board:ColumnsBoard):
     # get points
-    points = scoreAlgorithm(board, board.get_rows()-1)
+    points = matchingAlgo(board, board.get_rows()-1)
     # set points
     score.addPoints(self.pointFactor(points))
     # display points
@@ -58,23 +58,23 @@ def swapColor(tileFrom:ColumnsTile, tileTo:ColumnsTile):
   tileTo.setColor(temp)
 
 # when called, start row from highest number, meaning it goes bottom-up
-def scoreAlgorithm(board:ColumnsBoard, row:int) -> int:
+def matchingAlgo(board:ColumnsBoard, row:int) -> int:
   if (row < 0): # no more rows
     return 0
   for i in range(board.get_cols()):
     # match check for non-default-color tiles
     if not board.getTile(row, i).hasDefaultColor():
       color = board.getTile(row, i).getColor()
-      for rowT in range (-1, 1): # -1 and 0, bottom-up no need to re-look down
+      for rowT in range (-1, 2): # -1 and 1
         for colT in range (-1, 2): # -1 to 1
           depth = continueSearch(board, color, row, i, rowT, colT)
           if (depth > 2): # 3 or more continous matches
             # remove tiles
             removeMatches(board, color, row, i, rowT, colT)
             # return score as depth and recursion
-            return depth + scoreAlgorithm(board, row)
+            return depth + (matchingAlgo(board, row) if (rowT < 1) else matchingAlgo(board, row+depth-1))
 
-  return scoreAlgorithm(board, row-1) # move to next row
+  return matchingAlgo(board, row-1) # move to next row
 
 # Get depth of search one way
 def continueSearch(board:ColumnsBoard, color:str, row:int, col:int, rowT:int, colT:int):
@@ -89,14 +89,16 @@ def continueSearch(board:ColumnsBoard, color:str, row:int, col:int, rowT:int, co
 
 # Recursive path remove
 def removeMatches(board:ColumnsBoard, color:str, row:int, col:int, rowT:int, colT:int):
+  print("called")
   newRow = row+rowT
   newCol = col+colT
   if (newRow >= 0 and newRow < board.get_rows() and  # to prevent out-of-row 
       newCol >= 0 and newCol < board.get_cols() and  # to prevent out-of-col 
       board.getTile(newRow, newCol).getColor() == color): # if matches
     removeMatches(board, color, newRow, newCol, rowT, colT)
-  board.getTile(row, col).setDefaultColor() # set row and col to default
-  fallRow(board, row, col)
+  print(row, col)
+  board.getTile(row, col).setDefaultColor()
+  # fallRow(board, row, col)
 
 # get row and col and starts falling tiles
 def fallRow(board:ColumnsBoard, row:int, col:int):

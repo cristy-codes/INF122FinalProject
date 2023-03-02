@@ -2,6 +2,8 @@ from BaseGame.Tile import Tile
 
 
 class ColumnsTile(Tile):
+    defaultColor = "white"
+    
     def __init__(self, row, col, color="white", callback:callable=print):
         # color = color if color else self.getDefaultColor()
         super().__init__(color if color else self.getDefaultColor(),
@@ -10,10 +12,10 @@ class ColumnsTile(Tile):
                          callback)
 
     def getDefaultColor(self):
-        return "white"
+        return self.defaultColor
 
     def setDefaultColor(self):
-        self.color = "white"
+        self.setColor(self.defaultColor)
 
     def hasDefaultColor(self):
-        return self.color == self.getDefaultColor()
+        return self.getColor() == self.getDefaultColor()
