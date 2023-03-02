@@ -1,7 +1,7 @@
 import random
 
-from PyQt5.QtCore import QTimer
-
+from PyQt5.QtCore import QTimer, Qt
+from PyQt5.QtWidgets import QMessageBox, QLabel
 from BaseGame.Board import Board
 from Memory.MemoryTile import MemoryTile
 
@@ -12,6 +12,7 @@ class MemoryBoard(Board):
         self.rows = rows
         self.cols = cols
         self.handler = handler
+        self.game_over = False
         self.board_colors = []
         self.hiddenTiles = len(self.get_colors()) * 2
         self.buttons = []
@@ -19,10 +20,18 @@ class MemoryBoard(Board):
         for color in self.get_colors():
             self.board_colors.append(color)
             self.board_colors.append(color)
+        
+        self.remaining_time = 45
+        self.timer_label = QLabel(f"Time remaining: {self.remaining_time} seconds.", None)
+        self.addWidget(self.timer_label, self.get_rows(), 0, 1, self.get_cols())
+        self.timer = QTimer()
+        self.timer.timeout.connect(self.timerCountdown)
+        self.timer.start(1000)
 
         self.setBoard()
         self.reveal()
-
+        
+       
     def createTile(self, row, col, color="white"):
         back_color = random.choice(self.board_colors)
         self.board_colors.remove(back_color)
@@ -41,9 +50,6 @@ class MemoryBoard(Board):
                 self.addWidget(new_tile, i, j)
                 self.buttons.append(new_tile)
 
-    def determineGameOver(self):
-        pass
-
     def clickEvent(self):
         pass
 
@@ -58,3 +64,17 @@ class MemoryBoard(Board):
     def hide_tiles(self):
         for button in self.buttons:
             button.flip()
+                
+    def timerCountdown(self):
+        self.remaining_time -= 1
+        self.timer_label.setText(f"Time remaining: {self.remaining_time} seconds.")
+        if self.hiddenTiles == 0:
+            self.timer.stop()
+            QMessageBox.information(None, "Congratulations!", "You won the game!")
+            
+
+        elif self.remaining_time == 0:
+            self.timer.stop()
+            QMessageBox.information(None, "Time's up!", "You ran out of time.")
+
+ 

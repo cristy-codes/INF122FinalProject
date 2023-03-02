@@ -19,6 +19,8 @@ class MemoryController(GameController):
         self.clicked_buttons = []
         self.matched_buttons = []
 
+        self.game_over = False  # add this line
+        
     def handler(self, tile: Tile):
         if tile.face_down:
             tile.flip()
@@ -38,4 +40,6 @@ class MemoryController(GameController):
         for button in self.clicked_buttons:
             button.flip()
             button.setEnabled(True)
-        self.clicked_buttons = []
+        self.clicked_buttons = [] 
+
+   
