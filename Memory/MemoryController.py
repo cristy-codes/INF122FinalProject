@@ -19,7 +19,7 @@ class MemoryController(GameController):
         self.clicked_buttons = []
         self.matched_buttons = []
 
-        self.game_over = False  # add this line
+        self.game_over = False  
         
     def handler(self, tile: Tile):
         if tile.face_down:
