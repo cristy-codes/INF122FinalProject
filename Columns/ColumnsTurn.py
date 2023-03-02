@@ -5,7 +5,9 @@ import random
 
 class ColumnsTurn(TurnEvent):
     def processTurn(self, board: ColumnsBoard):
-        ### create new column
+        # create new column of three
         for i in range(3):
-            color = random.choice(board.get_colors()[1:6])
+            # get a random color out of six colors
+            color = random.choice(board.get_colors()[1:7])
+            # set ith column tile to color
             board.column[i].setColor(color)

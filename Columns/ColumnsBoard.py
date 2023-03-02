@@ -18,7 +18,7 @@ class ColumnsBoard(Board):
         self.addWidget(self.table[row][col], row, col)
 
   def createTile(self, row, col):
-    return ColumnsTile(self.getDefaultColor(), row, col, self.handler)
+    return ColumnsTile(row, col, None, self.handler)
 
   def setStatusBar(self):
     self.statusLabel = QLabel("Score:")
@@ -27,11 +27,8 @@ class ColumnsBoard(Board):
                    ColumnsTile("white", 0, 0),
                    ColumnsTile("white", 0, 0)]
     
-    self.addWidget(self.statusLabel, 0, self.cols, 2, 4, Qt.Alignment())
-    self.addWidget(self.scoreLabel, 2, self.cols, 2, 4, Qt.Alignment())
-    self.addWidget(self.column[0], 4, self.cols+2)
-    self.addWidget(self.column[1], 5, self.cols+2)
-    self.addWidget(self.column[2], 6, self.cols+2)
-
-  def getDefaultColor(self):
-    return "white"
+    self.addWidget(self.statusLabel, 0, self.cols, 2, 1, Qt.Alignment())
+    self.addWidget(self.scoreLabel, 0, self.cols+2, 2, 1, Qt.Alignment())
+    self.addWidget(self.column[0], 3, self.cols+2)
+    self.addWidget(self.column[1], 4, self.cols+2)
+    self.addWidget(self.column[2], 5, self.cols+2)
