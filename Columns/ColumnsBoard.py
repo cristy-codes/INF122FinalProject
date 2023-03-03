@@ -21,14 +21,18 @@ class ColumnsBoard(Board):
     return ColumnsTile(row, col, None, self.handler)
 
   def setStatusBar(self):
-    self.statusLabel = QLabel("Score:")
+    self.timerStatusLabel = QLabel("Time Remaining:")
+    self.timerLabel = QLabel("00:00")
+    self.scoreStatusLabel = QLabel("Score:")
     self.scoreLabel = QLabel("0")
     self.column = [ColumnsTile("white", 0, 0),
                    ColumnsTile("white", 0, 0),
                    ColumnsTile("white", 0, 0)]
     
-    self.addWidget(self.statusLabel, 0, self.cols, 2, 1, Qt.Alignment())
+    self.addWidget(self.scoreStatusLabel, 0, self.cols, 2, 1, Qt.Alignment())
     self.addWidget(self.scoreLabel, 0, self.cols+2, 2, 1, Qt.Alignment())
     self.addWidget(self.column[0], 3, self.cols+2)
     self.addWidget(self.column[1], 4, self.cols+2)
     self.addWidget(self.column[2], 5, self.cols+2)
+    self.addWidget(self.timerStatusLabel, 8, self.cols, 2, 1, Qt.Alignment())
+    self.addWidget(self.timerLabel, 9, self.cols, 2, 1, Qt.Alignment())

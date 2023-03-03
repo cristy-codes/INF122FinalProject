@@ -9,17 +9,12 @@ class ColumnsConditions(GameConditions):
     super().__init__(maxTime)
 
   def determineGameOver(self, board:ColumnsBoard):
-    result = False
-
-    ### check for timer value here
-    self.getMaxGameTime()
-
     ### check if there is a tile doesn't have default color in top row
     for tile in board.table[0]:
       if not (tile.hasDefaultColor()):
-        result = True
+        return True
 
-    return result
+    return False
 
   def clickEvent(self, tile:ColumnsTile, board:ColumnsBoard):
     ### moves the tiles down
@@ -39,7 +34,7 @@ class ColumnsConditions(GameConditions):
   # remove matching tiles and continue drop and get points
   def pointSystem(self, score:Score, board:ColumnsBoard):
     # get points
-    points = matchingAlgo(board, board.get_rows()-1)
+    points = matchingAlgo(board)
     # set points
     score.addPoints(self.pointFactor(points))
     # display points
@@ -57,64 +52,5 @@ def swapColor(tileFrom:ColumnsTile, tileTo:ColumnsTile):
   tileFrom.setColor(tileTo.getColor())
   tileTo.setColor(temp)
 
-# when called, start row from highest number, meaning it goes bottom-up
-def matchingAlgo(board:ColumnsBoard, row:int) -> int:
-  if (row < 0): # no more rows
-    return 0
-  for i in range(board.get_cols()):
-    # match check for non-default-color tiles
-    if not board.getTile(row, i).hasDefaultColor():
-      color = board.getTile(row, i).getColor()
-      for rowT in range (-1, 2): # -1 and 1
-        for colT in range (-1, 2): # -1 to 1
-          depth = continueSearch(board, color, row, i, rowT, colT)
-          if (depth > 2): # 3 or more continous matches
-            # remove tiles
-            removeMatches(board, color, row, i, rowT, colT)
-            # return score as depth and recursion
-            return depth + (matchingAlgo(board, row) if (rowT < 1) else matchingAlgo(board, row+depth-1))
-
-  return matchingAlgo(board, row-1) # move to next row
-
-# Get depth of search one way
-def continueSearch(board:ColumnsBoard, color:str, row:int, col:int, rowT:int, colT:int):
-  newRow = row+rowT
-  newCol = col+colT
-  if ((rowT != 0 or colT != 0) and # to prevent self search infinity
-      newRow >= 0 and newRow < board.get_rows() and  # to prevent out-of-row 
-      newCol >= 0 and newCol < board.get_cols() and  # to prevent out-of-col 
-      board.getTile(newRow, newCol).getColor() == color): # if matches
-    return 1 + continueSearch(board, color, newRow, newCol, rowT, colT)
-  return 1
-
-# Recursive path remove
-def removeMatches(board:ColumnsBoard, color:str, row:int, col:int, rowT:int, colT:int):
-  print("called")
-  newRow = row+rowT
-  newCol = col+colT
-  if (newRow >= 0 and newRow < board.get_rows() and  # to prevent out-of-row 
-      newCol >= 0 and newCol < board.get_cols() and  # to prevent out-of-col 
-      board.getTile(newRow, newCol).getColor() == color): # if matches
-    removeMatches(board, color, newRow, newCol, rowT, colT)
-  print(row, col)
-  board.getTile(row, col).setDefaultColor()
-  # fallRow(board, row, col)
-
-# get row and col and starts falling tiles
-def fallRow(board:ColumnsBoard, row:int, col:int):
-  start = row
-  while True:
-    if (start == 0 or
-        board.getTile(start, col).hasDefaultColor()):
-      break
-    start -= 1
-  stop = start
-  while True:
-    if (stop == 0 or not
-        board.getTile(stop, col).hasDefaultColor()):
-      break
-    stop -= 1
-  while (stop >= 0 and not board.getTile(stop, col).hasDefaultColor()):
-    swapColor(board.getTile(start, col), board.getTile(stop, col))
-    start -= 1
-    stop -= 1
+def matchingAlgo(board:ColumnsBoard) -> int:
+  return 0
