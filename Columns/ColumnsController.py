@@ -17,10 +17,14 @@ class ColumnsController(GameController):
     self.board.timerLabel.setText('{:02d}:{:02d}'.format(self.conditions.maxGameTime//60,self.conditions.maxGameTime%60))
     # check if there is time remaining
     if (self.conditions.maxGameTime == 0): # time over
-      self.timer.stop()
       self.stop()
 
   # added timer start to main start function, to start timer
   def start(self):
     self.timer.start(1000)
     super().start()
+
+  # added timer stop to main stop function, to stop timer
+  def stop(self):
+    self.timer.stop()
+    super().stop()
