@@ -59,8 +59,8 @@ class MemoryController(GameController):
                             self.board.timer.stop()
                             MemoryEndingMessage("You won! Your score is: " + str(timeRemaining))
                 # if the 2 clicked tiles don't match, flip them back over after a second
-            else:
-                QTimer.singleShot(1000, self.hide_clicked_buttons)
+                else:
+                    QTimer.singleShot(1000, self.hide_clicked_buttons)
 
     # hide the clicked buttons and stop tracking them
     def hide_clicked_buttons(self):
