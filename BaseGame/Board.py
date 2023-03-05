@@ -7,6 +7,11 @@ from PyQt5.QtCore import Qt, QTimer
 class Board(QGridLayout):
     def __init__(self, rows, cols):
         super().__init__()
+        self.timerLabel = None
+        self.timerStatusLabel = None
+        self.maxTime = None
+        self.timer = None
+
         self.rows = rows
         self.cols = cols
         self.colors = ["black", "cyan", "green", "red", "yellow", "magenta", "blue", "gray"]
@@ -68,8 +73,8 @@ class Board(QGridLayout):
         self.timerLabel = QLabel("00:00")
         self.addWidget(self.timerStatusLabel, 1, self.cols, 2, 1, Qt.Alignment())
         self.addWidget(self.timerLabel, 1, self.cols + 2, 2, 1, Qt.Alignment())
-
         self.maxTime = maxTime
+
         # create timer
         self.timer = QTimer()
         # assign function that will be called every second

@@ -14,7 +14,7 @@ class MemoryBoard(Board):
         self.handler = handler
         self.game_over = False
         self.board_colors = []
-        self.hiddenTiles = len(self.get_colors()) * 2
+        # self.hiddenTiles = len(self.get_colors()) * 2
         self.buttons = []
 
         # double up the colors to enable matching
@@ -74,13 +74,14 @@ class MemoryBoard(Board):
     def timerCountdown(self):
         # sets the label to remaining time left, subtracts time
         self.decrementTime()
+
         # determine if there are no more tiles to be flipped
-        if self.hiddenTiles == 0:
-            self.timer.stop()
-            QMessageBox.information(None, "Congratulations!", "You won the game!")
+        # if self.hiddenTiles == 0:
+        #     self.timer.stop()
+        #     QMessageBox.information(None, "Congratulations!", "You won the game!")
 
         # determine if there is any remaining time
-        elif self.maxTime == 0:
+        if self.maxTime == 0:
             self.timer.stop()
             QMessageBox.information(None, "Time's up!", "You ran out of time.")
 

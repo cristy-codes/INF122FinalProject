@@ -4,7 +4,8 @@ from PyQt5.QtWidgets import QMessageBox
 from BaseGame.GameController import GameController
 from BaseGame.Tile import Tile
 
-from Memory.MemoryVictory import MemoryVictory
+from Memory.MemoryEndingMessage import MemoryEndingMessage
+from Memory.MemoryBoard import MemoryBoard
 
 import time
 
@@ -15,11 +16,16 @@ class MemoryController(GameController):
         self.first_tile = None
         self.second_tile = None
 
+        self.board = None
+
         self.total_buttons = 16
         self.clicked_buttons = []
         self.matched_buttons = []
 
-        self.game_over = False  
+        self.game_over = False
+
+    def setBoard(self, board:MemoryBoard):
+        self.board = board
     
     ### called when the tile is clicked; houses all clicked functionality
     def handler(self, tile: Tile):
@@ -47,7 +53,10 @@ class MemoryController(GameController):
                     self.clicked_buttons = []
                     # if all tiles are matched, output a win
                     if len(self.matched_buttons) == self.total_buttons:
-                        MemoryVictory("You won!")
+                        if self.board.timer is not None:
+                            timeRemaining = self.board.timer.remainingTime()
+                            self.board.timer.stop()
+                            MemoryEndingMessage("You won! Your score is: " + str(timeRemaining))
                 # if the 2 clicked tiles don't match, flip them back over after a second
                 else:
                     QTimer.singleShot(1000, self.hide_clicked_buttons)
