@@ -22,8 +22,6 @@ class MemoryController(GameController):
         self.clicked_buttons = []
         self.matched_buttons = []
 
-        self.game_over = False
-
     def setBoard(self, board: MemoryBoard):
         self.board = board
 
@@ -54,7 +52,7 @@ class MemoryController(GameController):
                     # if all tiles are matched, output a win, and calculate a score from the
                     # remaining time
                     if len(self.matched_buttons) == self.total_buttons:
-                        if self.board.timer is not None:
+                        if self.board.timer is not None and self.board.timer.isActive():
                             timeRemaining = self.board.timer.remainingTime()
                             self.board.timer.stop()
                             MemoryEndingMessage("You won! Your score is: " + str(timeRemaining))
