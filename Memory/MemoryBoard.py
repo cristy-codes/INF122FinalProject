@@ -17,26 +17,27 @@ class MemoryBoard(Board):
         self.hiddenTiles = len(self.get_colors()) * 2
         self.buttons = []
 
+        # double up the colors to enable matching
         for color in self.get_colors():
             self.board_colors.append(color)
             self.board_colors.append(color)
-        
-        self.remaining_time = 45
-        self.timer_label = QLabel(f"Time remaining: {self.remaining_time} seconds.", None)
-        self.addWidget(self.timer_label, self.get_rows(), 0, 1, self.get_cols())
-        self.timer = QTimer()
-        self.timer.timeout.connect(self.timerCountdown)
-        self.timer.start(1000)
 
+        self.maxTime = 45
+
+        # set the board
         self.setBoard()
+        # create the timer object
+        self.createTimer(self.maxTime, self.timerCountdown)
+        # reveal the tiles
         self.reveal()
         
-       
+    # create an individual tile
     def createTile(self, row, col, color="white"):
         back_color = random.choice(self.board_colors)
         self.board_colors.remove(back_color)
         return MemoryTile(color, back_color, row, col, self.handler)
 
+    # set the playable area
     def setBoard(self):
         board_colors = []
 
@@ -50,30 +51,36 @@ class MemoryBoard(Board):
                 self.addWidget(new_tile, i, j)
                 self.buttons.append(new_tile)
 
+    # im not sure why this is here i cant lie
     def clickEvent(self):
         pass
-
+    
+    # im not sure why this is here i cant lie
     def pointSystem(self):
         pass
-
+    
+    # show all tiles for a second
     def reveal(self):
         for button in self.buttons:
             button.flip()
         QTimer.singleShot(1000, self.hide_tiles)
 
+    # hide all tiles
     def hide_tiles(self):
         for button in self.buttons:
             button.flip()
-                
+
+    # Function that is called every second (that the timer counts down)
     def timerCountdown(self):
-        self.remaining_time -= 1
-        self.timer_label.setText(f"Time remaining: {self.remaining_time} seconds.")
+        # sets the label to remaining time left, subtracts time
+        self.decrementTime()
+        # determine if there are no more tiles to be flipped
         if self.hiddenTiles == 0:
             self.timer.stop()
             QMessageBox.information(None, "Congratulations!", "You won the game!")
-            
 
-        elif self.remaining_time == 0:
+        # determine if there is any remaining time
+        elif self.maxTime == 0:
             self.timer.stop()
             QMessageBox.information(None, "Time's up!", "You ran out of time.")
 
