@@ -21,7 +21,7 @@ class ColumnsConditions(GameConditions):
     swapColor(board.getTile(0, tile.col), board.column[0])
     swapColor(board.getTile(1, tile.col), board.column[1])
     swapColor(board.getTile(2, tile.col), board.column[2])
-    # gavity fall column, to drop tiles to bottom
+    # gravity fall column, to drop tiles to bottom
     fallColumn(board, tile.col)
 
   # remove matching tiles and continue drop and get points

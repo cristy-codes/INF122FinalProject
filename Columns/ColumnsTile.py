@@ -11,11 +11,14 @@ class ColumnsTile(Tile):
                          col, 
                          callback)
 
+    # get the default color of the tile
     def getDefaultColor(self):
         return self.defaultColor
 
+    # set the default color of the tile
     def setDefaultColor(self):
         self.setColor(self.defaultColor)
 
+    # determine if the tile has an assigned default color
     def hasDefaultColor(self):
         return self.getColor() == self.getDefaultColor()

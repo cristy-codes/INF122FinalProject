@@ -1,6 +1,6 @@
-from PyQt5.QtWidgets import QLabel
+from PyQt5.QtWidgets import QLabel, QMessageBox
 from Columns.ColumnsTile import ColumnsTile
-from PyQt5.QtCore import Qt
+from PyQt5.QtCore import Qt, QTimer
 from BaseGame.Board import Board
 
 
@@ -8,7 +8,14 @@ class ColumnsBoard(Board):
   def __init__(self, rows, cols, handler=print):
     super().__init__(rows, cols)
     self.handler = handler
+
+    self.maxTime = 140
+
+    # set up the board
     self.setBoard()
+    # create the timer object
+    self.createTimer(self.maxTime, self.timerCountdown)
+    # set up the status area
     self.setStatusBar()
 
   def setBoard(self):
@@ -21,18 +28,25 @@ class ColumnsBoard(Board):
     return ColumnsTile(row, col, None, self.handler)
 
   def setStatusBar(self):
-    self.timerStatusLabel = QLabel("Time Remaining:")
-    self.timerLabel = QLabel("00:00")
-    self.scoreStatusLabel = QLabel("Score:")
-    self.scoreLabel = QLabel("0")
+    # set up column tile that indicates the next blocks to place
     self.column = [ColumnsTile("white", 0, 0),
                    ColumnsTile("white", 0, 0),
                    ColumnsTile("white", 0, 0)]
-    
-    self.addWidget(self.scoreStatusLabel, 0, self.cols, 2, 1, Qt.Alignment())
-    self.addWidget(self.scoreLabel, 0, self.cols+2, 2, 1, Qt.Alignment())
-    self.addWidget(self.column[0], 3, self.cols+2)
-    self.addWidget(self.column[1], 4, self.cols+2)
-    self.addWidget(self.column[2], 5, self.cols+2)
-    self.addWidget(self.timerStatusLabel, 8, self.cols, 2, 1, Qt.Alignment())
-    self.addWidget(self.timerLabel, 9, self.cols, 2, 1, Qt.Alignment())
+
+    # create label indicating what the next blocks are
+    self.queuedBlocksLabel = QLabel("Next block:")
+    self.addWidget(self.queuedBlocksLabel, 3, self.cols)
+
+    # add next blocks to board
+    self.addWidget(self.column[0], 4, self.cols+1)
+    self.addWidget(self.column[1], 5, self.cols+1)
+    self.addWidget(self.column[2], 6, self.cols+1)
+
+  # # function call every second, subtract by one from maxGameTime
+  def timerCountdown(self):
+    # sets the label to remaining time left, subtracts time
+    self.decrementTime()
+    # check if there is time remaining
+    if (self.maxTime == 0): # time over
+      QMessageBox.information(None, "GAME OVER!", "You ran out of time!")
+      self.timerStop()

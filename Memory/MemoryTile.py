@@ -9,23 +9,28 @@ class MemoryTile(Tile):
         self.connect = True
         self.face_down = True
 
+    # set the back color of the tile
     def set_back_color(self, color):
         self.back_color = color
 
+    # get back color of tile
     def get_back_color(self):
         return self.back_color
 
+    # swap the back and front colors to display
     def flip(self):
         temp = self.back_color
         self.back_color = self.color
         self.color = temp
         self.display()
 
+    # disable the tile from being clicked
     def disable(self):
         if self.connect:
             self.connect = False
             self.clicked.disconnect()
 
+    # determine if another tile matches this one
     def match(self, other_tile):
         if self.color == other_tile.color:
             return True

@@ -4,6 +4,7 @@ import random
 
 
 class ColumnsTurn(TurnEvent):
+    # action performed during a turn
     def processTurn(self, board: ColumnsBoard):
         # create new column of three
         for i in range(3):

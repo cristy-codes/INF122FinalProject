@@ -15,6 +15,7 @@ class Tile(QPushButton):
         self.callback = callback
         self.enable()
 
+    # change the color of the tile and display it
     def setColor(self, color):
         self.color = color
         self.display()
@@ -34,20 +35,26 @@ class Tile(QPushButton):
     def getCol(self) -> int:
         return self.col
 
+    # disable button to prevent clicking
     def disable(self):
         self.clicked.disconnect()
 
+    # enable button to enable clicking
     def enable(self):
         self.clicked.connect(self.click)
 
+    # set callback function for the tile
     def setCallback(self, callback):
         self.callback = callback
 
+    # get callback function for the tile
     def getCallback(self) -> callable:
         return self.callback
 
+    # actions that are performed once a tile is clicked
     def click(self):
         self.callback(self)
 
+    # show the tile's color
     def display(self):
         self.setStyleSheet("background-color : " + self.color)
