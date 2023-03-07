@@ -20,7 +20,10 @@ class MemoryController(GameController):
         self.matched_buttons = []
 
         self.game_over = False  
-    
+
+    def stop_timer(self):
+        self.board.timer.stop()
+
     ### called when the tile is clicked; houses all clicked functionality
     def handler(self, tile: Tile):
         '''
@@ -47,6 +50,7 @@ class MemoryController(GameController):
                     self.clicked_buttons = []
                     # if all tiles are matched, output a win
                     if len(self.matched_buttons) == self.total_buttons:
+                        self.stop_timer()
                         MemoryVictory("You won!")
                 # if the 2 clicked tiles don't match, flip them back over after a second
                 else:
@@ -58,3 +62,8 @@ class MemoryController(GameController):
             button.flip()
             button.setEnabled(True)
         self.clicked_buttons = [] 
+
+
+
+
+#

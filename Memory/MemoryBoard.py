@@ -84,4 +84,9 @@ class MemoryBoard(Board):
             self.timer.stop()
             QMessageBox.information(None, "Time's up!", "You ran out of time.")
 
+
+
+
+
+
  
