@@ -22,8 +22,15 @@ class MemoryController(GameController):
         self.clicked_buttons = []
         self.matched_buttons = []
 
+<<<<<<< HEAD
     def setBoard(self, board: MemoryBoard):
         self.board = board
+=======
+        self.game_over = False  
+
+    def stop_timer(self):
+        self.board.timer.stop()
+>>>>>>> main
 
     ### called when the tile is clicked; houses all clicked functionality
     def handler(self, tile: Tile):
@@ -52,10 +59,15 @@ class MemoryController(GameController):
                     # if all tiles are matched, output a win, and calculate a score from the
                     # remaining time
                     if len(self.matched_buttons) == self.total_buttons:
+<<<<<<< HEAD
                         if self.board.timer is not None and self.board.timer.isActive():
                             timeRemaining = self.board.timer.remainingTime()
                             self.board.timer.stop()
                             MemoryEndingMessage("You won! Your score is: " + str(timeRemaining))
+=======
+                        self.stop_timer()
+                        MemoryVictory("You won!")
+>>>>>>> main
                 # if the 2 clicked tiles don't match, flip them back over after a second
                 else:
                     QTimer.singleShot(1000, self.hide_clicked_buttons)
@@ -65,4 +77,13 @@ class MemoryController(GameController):
         for button in self.clicked_buttons:
             button.flip()
             button.setEnabled(True)
+<<<<<<< HEAD
         self.clicked_buttons = []
+=======
+        self.clicked_buttons = [] 
+
+
+
+
+#
+>>>>>>> main
