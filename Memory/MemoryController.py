@@ -1,12 +1,9 @@
 from PyQt5.QtCore import QTimer
-from PyQt5.QtWidgets import QMessageBox
+from PyQt5.QtWidgets import QLabel
 
 from BaseGame.GameController import GameController
 from BaseGame.Tile import Tile
-
-from Memory.MemoryVictory import MemoryVictory
-
-import time
+from Memory.MemoryEndingMessage import MemoryEndingMessage
 
 
 class MemoryController(GameController):
@@ -19,12 +16,12 @@ class MemoryController(GameController):
         self.clicked_buttons = []
         self.matched_buttons = []
 
-        self.game_over = False  
+        self.game_over = False
 
     def stop_timer(self):
         self.board.timer.stop()
 
-    ### called when the tile is clicked; houses all clicked functionality
+        ### called when the tile is clicked; houses all clicked functionality
     def handler(self, tile: Tile):
         '''
         STRUCTURE FROM GAMECONTROLLER
@@ -48,10 +45,13 @@ class MemoryController(GameController):
                 if self.clicked_buttons[0].color == self.clicked_buttons[1].color:
                     self.matched_buttons.extend(self.clicked_buttons)
                     self.clicked_buttons = []
-                    # if all tiles are matched, output a win
+                    # if all tiles are matched, output a win and the player's score.
                     if len(self.matched_buttons) == self.total_buttons:
-                        self.stop_timer()
-                        MemoryVictory("You won!")
+                        if self.board.timer is not None and self.board.timer.isActive():
+                            time_remaining = self.board.timer.remainingTime()
+                            self.stop_timer()
+                            MemoryEndingMessage("You won! Your score is: " + str(8 * time_remaining))
+                            self.board.itemAt(1).widget().setText(str(8 * time_remaining))
                 # if the 2 clicked tiles don't match, flip them back over after a second
                 else:
                     QTimer.singleShot(1000, self.hide_clicked_buttons)

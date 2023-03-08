@@ -12,9 +12,7 @@ class MemoryBoard(Board):
         self.rows = rows
         self.cols = cols
         self.handler = handler
-        self.game_over = False
         self.board_colors = []
-        self.hiddenTiles = len(self.get_colors()) * 2
         self.buttons = []
 
         # double up the colors to enable matching
@@ -50,14 +48,6 @@ class MemoryBoard(Board):
                 new_tile = self.createTile(i, j)
                 self.addWidget(new_tile, i, j)
                 self.buttons.append(new_tile)
-
-    # im not sure why this is here i cant lie
-    def clickEvent(self):
-        pass
-    
-    # im not sure why this is here i cant lie
-    def pointSystem(self):
-        pass
     
     # show all tiles for a second
     def reveal(self):
@@ -74,13 +64,10 @@ class MemoryBoard(Board):
     def timerCountdown(self):
         # sets the label to remaining time left, subtracts time
         self.decrementTime()
-        # determine if there are no more tiles to be flipped
-        if self.hiddenTiles == 0:
-            self.timer.stop()
-            QMessageBox.information(None, "Congratulations!", "You won the game!")
 
-        # determine if there is any remaining time
-        elif self.maxTime == 0:
+        # if there is no more time remaining, declare a
+        # game loss.
+        if self.maxTime == 0:
             self.timer.stop()
             QMessageBox.information(None, "Time's up!", "You ran out of time.")
 
