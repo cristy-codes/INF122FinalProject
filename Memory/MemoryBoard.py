@@ -38,7 +38,6 @@ class MemoryBoard(Board):
     # set the playable area
     def setBoard(self):
         board_colors = []
-
         for color in self.get_colors():
             board_colors.append(color)
             board_colors.append(color)
@@ -64,7 +63,6 @@ class MemoryBoard(Board):
     def timerCountdown(self):
         # sets the label to remaining time left, subtracts time
         self.decrementTime()
-
         # if there is no more time remaining, declare a
         # game loss.
         if self.maxTime == 0:
