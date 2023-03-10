@@ -9,7 +9,7 @@ class ColumnsConditions(GameConditions):
     super().__init__(maxTime)
 
   # check if there is a tile doesn't have default color in top row
-  def determineGameOver(self, board:ColumnsBoard):
+  def gameOverCondition(self, board:ColumnsBoard):
     for tile in board.table[0]:
       if not (tile.hasDefaultColor()):
         return True

@@ -22,7 +22,7 @@ class MemoryController(GameController):
         self.board.timer.stop()
 
         ### called when the tile is clicked; houses all clicked functionality
-    def handler(self, tile: Tile):
+    def processPlayerMove(self, tile: Tile):
         '''
         STRUCTURE FROM GAMECONTROLLER
 
