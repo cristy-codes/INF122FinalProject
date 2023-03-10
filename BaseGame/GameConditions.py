@@ -14,7 +14,7 @@ class GameConditions():
 
     # function that determines whether or not the game is still active or over
     @abstractmethod
-    def determineGameOver(self):
+    def gameOverCondition(self):
         pass
     
     # establishes what happens when a tile is clicked

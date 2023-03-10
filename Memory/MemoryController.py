@@ -34,7 +34,7 @@ class MemoryController(GameController):
         self.board.timer.stop()
 
         ### called when the tile is clicked; houses all clicked functionality
-    def handler(self, tile: Tile):
+    def processPlayerMove(self, tile: Tile):
         '''
         STRUCTURE FROM GAMECONTROLLER
 
@@ -57,15 +57,19 @@ class MemoryController(GameController):
                 if self.clicked_buttons[0].color == self.clicked_buttons[1].color:
                     self.matched_buttons.extend(self.clicked_buttons)
                     self.clicked_buttons = []
+                    
+                    ####### CALCULATE/ADD SCORE #######
                     currScore = len(self.matched_buttons * 5)
                     self.board.scoreLabel.setText(str(currScore))
-                    # if all tiles are matched, output a win and the player's score.
+                    ####### CALCULATE/ADD SCORE #######
+                    
+                    ####### GAME LOOP #######
+                    # if all tiles are matched, output a win and the player's score. 
                     if len(self.matched_buttons) == self.total_buttons:
                         if self.board.timer is not None and self.board.timer.isActive():
-                            time_remaining = self.board.timer.remainingTime()
+                            time_remaining = self.board.maxTime
                             self.stop_timer()
                             score = currScore + time_remaining
-                            print(time_remaining)
                             MemoryEndingMessage("You won! Your score is: " + str(score))
                             self.board.itemAt(1).widget().setText(str(score))
                             self.save_score(score)

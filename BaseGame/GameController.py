@@ -17,18 +17,18 @@ class GameController:
         self.board = board
 
     ### called when the tile is clicked; houses all clicked functionality
-    def handler(self, tile:Tile):
+    def processPlayerMove(self, tile:Tile):
         # do something when the tile is clicked
         self.conditions.clickEvent(tile, self.board)
         # calculate and add score
         self.conditions.pointSystem(self.score, self.board)
         # determine to either start another turn or end the game
-        self.gameLoop()
+        self.checkGameOver()
 
     ### mechanism to determine whether to end game or proceed to next turn
-    def gameLoop(self):
+    def checkGameOver(self):
         ### stop game if the game is over
-        if (self.conditions.determineGameOver(self.board)):
+        if (self.conditions.gameOverCondition(self.board)):
             QMessageBox.information(None, "GAME OVER!", "You ran out of space!")
             self.stop()
         ### iterate through another turn
