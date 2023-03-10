@@ -56,7 +56,7 @@ class MemoryController(GameController):
                     # if all tiles are matched, output a win and the player's score. 
                     if len(self.matched_buttons) == self.total_buttons:
                         if self.board.timer is not None and self.board.timer.isActive():
-                            time_remaining = self.board.timer.remainingTime()
+                            time_remaining = self.board.maxTime
                             self.stop_timer()
                             MemoryEndingMessage("You won! Your score is: " + str(currScore + time_remaining))
                             self.board.itemAt(1).widget().setText(str(currScore + time_remaining))
