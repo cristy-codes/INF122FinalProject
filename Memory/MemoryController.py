@@ -1,5 +1,6 @@
-from PyQt5.QtCore import QTimer
+from PyQt5.QtCore import QTimer, Qt
 from PyQt5.QtWidgets import QLabel
+
 
 from BaseGame.GameController import GameController
 from BaseGame.Tile import Tile
@@ -45,13 +46,22 @@ class MemoryController(GameController):
                 if self.clicked_buttons[0].color == self.clicked_buttons[1].color:
                     self.matched_buttons.extend(self.clicked_buttons)
                     self.clicked_buttons = []
-                    # if all tiles are matched, output a win and the player's score.
+                    
+                    ####### CALCULATE/ADD SCORE #######
+                    currScore = len(self.matched_buttons * 5)
+                    self.board.scoreLabel.setText(str(currScore))
+                    ####### CALCULATE/ADD SCORE #######
+                    
+                    ####### GAME LOOP #######
+                    # if all tiles are matched, output a win and the player's score. 
                     if len(self.matched_buttons) == self.total_buttons:
                         if self.board.timer is not None and self.board.timer.isActive():
                             time_remaining = self.board.timer.remainingTime()
                             self.stop_timer()
-                            MemoryEndingMessage("You won! Your score is: " + str(8 * time_remaining))
-                            self.board.itemAt(1).widget().setText(str(8 * time_remaining))
+                            MemoryEndingMessage("You won! Your score is: " + str(currScore + time_remaining))
+                            self.board.itemAt(1).widget().setText(str(currScore + time_remaining))
+                    ####### GAME LOOP #######
+                    
                 # if the 2 clicked tiles don't match, flip them back over after a second
                 else:
                     QTimer.singleShot(1000, self.hide_clicked_buttons)
