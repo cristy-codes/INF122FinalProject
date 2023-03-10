@@ -13,3 +13,5 @@ class Score():
     # getter for current points
     def getCurrentPoints(self):
         return self.score
+    
+    
