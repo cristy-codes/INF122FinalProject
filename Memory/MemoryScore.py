@@ -42,6 +42,6 @@ class MemoryScore(QDialog):
             return
 
         with open("scoreboard.txt", "a") as f:
-            f.write(f"Memory - {self.score} {initials}\n")
+            f.write(f"{self.score} {initials}\n")
 
         self.accept()
