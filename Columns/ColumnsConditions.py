@@ -27,7 +27,8 @@ class ColumnsConditions(GameConditions):
     # remove matching tiles and continue drop and get points
     def pointSystem(self, score: Score, board: ColumnsBoard):
         # get points
-        points = matchingAlgorithm(board)
+        points, board = matchingAlgorithm(board)
+
         # set points
         score.addPoints(self.pointFactor(points))
         # display points
@@ -49,70 +50,220 @@ def swapColor(tileFrom: ColumnsTile, tileTo: ColumnsTile):
 
 # Checks for tiles with matching colors
 #   Returns points as int
-def matchingAlgorithm(board: ColumnsBoard) -> int:
-    # makes a list used to denote removals.
-    # Unchecked = 0
+def matchingAlgorithm(board: ColumnsBoard):
+    points = 0
+    has_fallen = True
 
-    # flag_removal_list = [[0 for x in range(board.get_cols())] for x in range(board.get_rows())]
-    # print(flag_removal_list)
+    while has_fallen:  # if something falls, check the board again
+        has_fallen = False  # nothing has fallen this run yet
+        for col in range(board.get_cols()):
+            # debug
+            # old_row_disp = ""
+            row_disp = ""
+            print(board.get_rows())
+            print(board.getTile(board.get_rows() - 1, col).getColor())
+            # debug
 
-    for col in range(board.get_cols()):
-        removeCol(board, col)
-        print()
+            new_board = board
+
+            # start at the bottom, work your way up
+            col_range = range(board.get_rows() - 1, -1, -1)
+            row_range = range(board.get_cols())
+
+            for row in col_range:
+                # old_row_disp = old_row_disp + board.getTile(row, col).getColor() + " "
+                curr_board_color = board.getTile(row, col).getColor()
+                print("start check: " + curr_board_color)
+                print("row, col: " + str(row) + ", " + str(col))
+                # check up
+                if curr_board_color != "white":  # if not white
+                    if row - 1 in col_range and row - 2 in col_range:  # if next two blocks in range,
+                        if curr_board_color == board.getTile(row - 1,
+                                                             col).getColor():  # and if tile above matches color,
+                            if curr_board_color == board.getTile(row - 2,
+                                                                 col).getColor():  # if 2nd above also matches color,
+                                print("here!")
+                                # print three before turning white
+                                print(board.getTile(row, col).getColor())
+                                print(board.getTile(row - 1, col).getColor())
+                                print(board.getTile(row - 2, col).getColor())
+
+                                # set scanned three to white
+                                new_board.getTile(row, col).setColor("white")
+                                new_board.getTile(row - 1, col).setColor("white")
+                                new_board.getTile(row - 2, col).setColor("white")
+
+                                # continues deletion
+                                points, new_board = remove_up(curr_board_color, board, new_board,
+                                                              range(row - 2, -1, -1), col, points)
+
+                                # make columns fall
+                                fallColumn(new_board, col)
+                                has_fallen = True  # run again
+
+                    # check right
+                    if col + 1 in row_range and col + 2 in row_range:  # if next two blocks in range,
+                        if curr_board_color == board.getTile(row, col + 1).getColor():  # and if right matches color,
+                            if curr_board_color == board.getTile(row,
+                                                                 col + 2).getColor():  # if 2nd right also matches color,
+                                # set scanned three to white
+                                new_board.getTile(row, col).setColor("white")
+                                new_board.getTile(row, col + 1).setColor("white")
+                                new_board.getTile(row, col + 2).setColor("white")
+
+                                # make individual columns fall
+                                fallColumn(new_board, col)
+                                fallColumn(new_board, col + 1)
+                                fallColumn(new_board, col + 2)
+                                has_fallen = True  # run again
+
+                                # continues deletion
+                                points, new_board = remove_right(curr_board_color, board, new_board,
+                                                                 range(col + 3, board.get_cols(), 1), row, points)
+
+                    # check diagonals
+                    if col + 1 in row_range and col + 2 in row_range:  # if next two blocks diagonally in range,
+                        # diag/up
+                        if row - 1 in col_range and row - 2 in col_range:  # if next two blocks diag/up in range,
+                            if curr_board_color == board.getTile(row - 1,
+                                                                 col + 1).getColor():  # and if diag/up matches color,
+                                if curr_board_color == board.getTile(row - 2,
+                                                                     col + 2).getColor():  # if 2nd diag/up also matches
+                                    # set scanned three to white
+                                    new_board.getTile(row, col).setColor("white")
+                                    new_board.getTile(row - 1, col + 1).setColor("white")
+                                    new_board.getTile(row - 2, col + 2).setColor("white")
+
+                                    # make columns fall
+                                    fallColumn(new_board, col)
+                                    fallColumn(new_board, col + 1)
+                                    fallColumn(new_board, col + 2)
+                                    has_fallen = True  # run again
+
+                                    remove_diagonal(curr_board_color, board, new_board,
+                                                    range(col + 3, board.get_cols(), 1), row - 3, points, "UP")
+
+                        # diag/down
+                        if row + 1 in col_range and row + 2 in col_range:  # if next two blocks diag/down in range,
+                            if curr_board_color == board.getTile(row + 1,
+                                                                 col + 1).getColor():  # and if diag/down matches color,
+                                if curr_board_color == board.getTile(row + 2,
+                                                                     col + 2).getColor():  # if 2nd diag/down matches
+                                    # set scanned three to white
+                                    new_board.getTile(row, col).setColor("white")
+                                    new_board.getTile(row + 1, col + 1).setColor("white")
+                                    new_board.getTile(row + 2, col + 2).setColor("white")
+
+                                    # make columns fall
+                                    fallColumn(new_board, col)
+                                    fallColumn(new_board, col + 1)
+                                    fallColumn(new_board, col + 2)
+                                    has_fallen = True  # run again
+
+                                    remove_diagonal(curr_board_color, board, new_board,
+                                                    range(col + 3, board.get_cols(), 1), row + 3, points, "DOWN")
+
+                else:
+                    # debug
+                    print("Hit white -- ending column")
+                    #
+                    # if hit white, no need to continue
+                    break
+            print()
+            # end column loop
     print("New Iteration")
     print()
     print()
-    return 0
+    return points, board
 
 
-# This Helper Method will take care of removing matching colors in a row
-def removeCol(board: ColumnsBoard, col: int) -> int:
-    # debug
-    old_row_disp = ""
-    row_disp = ""
-    print(board.get_rows())
-    print(board.getTile(board.get_rows() - 1, col).getColor())
-    # debug
-
-    points = 0
-
-    # start at the bottom, work your way up
-    col_range = range(board.get_rows() - 1, 0, -1)
-    row_range = range(board.get_cols())
-    for row in col_range:
-        old_row_disp = old_row_disp + board.getTile(row, col).getColor() + " "
-
-        curr_board_color = board.getTile(row, col).getColor()
-        if curr_board_color != "white": # if not white
-            if row - 1 in col_range and row - 2 in col_range:   # if next two blocks in range,
-                if curr_board_color == board.getTile(row - 1, col).getColor():      # and if tile above matches color,
-                    if curr_board_color == board.getTile(row - 2, col).getColor():  # if 2nd above also matches color,
-                        points += remove_up(curr_board_color)                       # start removal up
-            if col + 1 in row_range and col + 2 in row_range:    # if next two blocks in range,
-                if curr_board_color == board.getTile(row, col + 1).getColor():      # and if right matches color,
-                    if curr_board_color == board.getTile(row, col + 1).getColor():  # if 2nd right also matches color,
-                        points += remove_right(curr_board_color)                    # start removal right
-        else:
-            # debug
-            print("Hit white -- ending column")
-            return points
-    print(old_row_disp)
-
-
-# This method attempts deletion of a specific color looking upwards
+# This method attempts deletion of a specific color looking upwards.
 #   This method will end once it hits a new color
-def remove_up(color:str):
-    print("In remove UP: " + color)
-    return 1
+#   Returns points and new_board (updates board)
+def remove_up(color: str, board: ColumnsBoard, new_board: ColumnsBoard, leftover_range: range, col: int, points: int):
+    #### REPLACE with algorithm that determines how many points gained for removals ####
+    MORE_THAN_THREE_POINTS = 200
+    EXACTLY_THREE_POINTS = 300
+
+    # gives points for exactly 3 removals
+    points += EXACTLY_THREE_POINTS
+
+    # start removal up
+    print("start remove up")
+    print(leftover_range)
+    for remove_row in leftover_range:
+        print("in here")
+        #print("row, col: " + remove_row + " " + col + " " + board.getTile(remove_row, col).getColor())
+        # if same color, continue removing
+        if color == board.getTile(remove_row, col).getColor():
+            print("another one")
+            new_board.getTile(remove_row, col).setColor("white")
+            points += MORE_THAN_THREE_POINTS
+        else:
+            return points, new_board  # if color doesn't match initial color, exit loop
+    # end remove_row loop
+    return points, new_board
 
 
-def remove_right(color:str):
-    print("In remove RIGHT: " + color)
-    return 1
+def remove_right(color: str, board: ColumnsBoard, new_board: ColumnsBoard, leftover_range: range, row: int,
+                 points: int):
+    #### REPLACE with algorithm that determines how many points gained for removals ####
+    MORE_THAN_THREE_POINTS = 200
+    EXACTLY_THREE_POINTS = 300
+
+    print("start remove right")
+    # start removal right
+    for remove_col in leftover_range:
+        print("in here")
+        print(board.getTile(row, remove_col).getColor())
+        # if same color, continue removing
+        if color == board.getTile(row, remove_col).getColor():
+            print("another one")
+            # remove & fall row
+            new_board.getTile(row, remove_col).setColor("white")
+            fallColumn(new_board, remove_col)
+            # update points
+            points += MORE_THAN_THREE_POINTS
+        else:
+            return points, new_board  # if color doesn't match initial color, exit loop
+    # end remove_row loop
+    return points, new_board
 
 
+def remove_diagonal(color: str, board: ColumnsBoard, new_board: ColumnsBoard, leftover_range: range, remove_row: int,
+                    points: int, diagonal_type: str):
+    #### REPLACE with algorithm that determines how many points gained for removals ####
+    MORE_THAN_THREE_POINTS = 200
+    EXACTLY_THREE_POINTS = 300
 
-# Drop all tiles to bottom for one column (like gravity), 
+    print("start remove diagonal")
+    # Start removing diagonally. Loop is based on cols. We subtract 3 from row to account for already processed tiles
+    for remove_col in leftover_range:
+        print("in here")
+        print(board.getTile(remove_row, remove_col).getColor())
+        # if same color, continue removing
+        if color == board.getTile(remove_row, remove_col).getColor():
+            print("another one")
+            # remove & fall row
+            new_board.getTile(remove_row, remove_col).setColor("white")
+            fallColumn(new_board, remove_col)
+
+            # update points
+            points += MORE_THAN_THREE_POINTS
+
+            # iterates up if diagonal/up, iterates down if diagonal/down
+            if diagonal_type.upper() == "UP":
+                remove_row += 1  # increment row
+            else:
+                remove_row -= 1  # decrement row
+
+        else:
+            return points, new_board  # if color doesn't match initial color, exit loop
+    # end remove_row loop
+    return points, new_board
+
+
+# Drop all tiles to bottom for one column (like gravity),
 # starts from bottom (row ##), moves to top (row 0).
 # Based on a sliding window algorithm, find tile that is default color (start) and tile 
 # that is non-default color (stop), swap them and continue search from start
