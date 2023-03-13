@@ -4,7 +4,7 @@ from Memory.MemoryGame import MemoryGame
 from Columns.ColumnsGame import ColumnsGame
 
 # Nico - debugging/program execution - remember to remove #
-import hunter
+# import hunter
 #hunter.trace(action=hunter.CallPrinter)
 # Nico - debugging/program execution - remember to remove #
 

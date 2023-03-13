@@ -95,7 +95,7 @@ def matchingAlgorithm(board: ColumnsBoard):
 
                                 # continues deletion
                                 points, new_board = remove_up(curr_board_color, board, new_board,
-                                                              range(row - 2, -1, -1), col, points)
+                                                              range(row - 3, -1, -1), col, points)
 
                                 # make columns fall
                                 fallColumn(new_board, col)
@@ -140,8 +140,11 @@ def matchingAlgorithm(board: ColumnsBoard):
                                     fallColumn(new_board, col + 2)
                                     has_fallen = True  # run again
 
-                                    remove_diagonal(curr_board_color, board, new_board,
-                                                    range(col + 3, board.get_cols(), 1), row - 3, points, "UP")
+                                    if col+3 < board.get_cols() and row-3 >= 0:
+
+
+                                        remove_diagonal(curr_board_color, board, new_board,
+                                                        range(col + 3, board.get_cols(), 1), row - 3, points, "UP")
 
                         # diag/down
                         if row + 1 in col_range and row + 2 in col_range:  # if next two blocks diag/down in range,
@@ -160,8 +163,10 @@ def matchingAlgorithm(board: ColumnsBoard):
                                     fallColumn(new_board, col + 2)
                                     has_fallen = True  # run again
 
-                                    remove_diagonal(curr_board_color, board, new_board,
-                                                    range(col + 3, board.get_cols(), 1), row + 3, points, "DOWN")
+                                    if col+3 < board.get_cols() and row+3 < board.get_rows():
+
+                                        remove_diagonal(curr_board_color, board, new_board,
+                                                        range(col + 3, board.get_cols(), 1), row + 3, points, "DOWN")
 
                 else:
                     # debug
@@ -182,8 +187,8 @@ def matchingAlgorithm(board: ColumnsBoard):
 #   Returns points and new_board (updates board)
 def remove_up(color: str, board: ColumnsBoard, new_board: ColumnsBoard, leftover_range: range, col: int, points: int):
     #### REPLACE with algorithm that determines how many points gained for removals ####
-    MORE_THAN_THREE_POINTS = 200
-    EXACTLY_THREE_POINTS = 300
+    MORE_THAN_THREE_POINTS = 1
+    EXACTLY_THREE_POINTS = 3
 
     # gives points for exactly 3 removals
     points += EXACTLY_THREE_POINTS
@@ -208,8 +213,10 @@ def remove_up(color: str, board: ColumnsBoard, new_board: ColumnsBoard, leftover
 def remove_right(color: str, board: ColumnsBoard, new_board: ColumnsBoard, leftover_range: range, row: int,
                  points: int):
     #### REPLACE with algorithm that determines how many points gained for removals ####
-    MORE_THAN_THREE_POINTS = 200
-    EXACTLY_THREE_POINTS = 300
+    MORE_THAN_THREE_POINTS = 1
+    EXACTLY_THREE_POINTS = 3
+
+    points += EXACTLY_THREE_POINTS
 
     print("start remove right")
     # start removal right
@@ -233,8 +240,10 @@ def remove_right(color: str, board: ColumnsBoard, new_board: ColumnsBoard, lefto
 def remove_diagonal(color: str, board: ColumnsBoard, new_board: ColumnsBoard, leftover_range: range, remove_row: int,
                     points: int, diagonal_type: str):
     #### REPLACE with algorithm that determines how many points gained for removals ####
-    MORE_THAN_THREE_POINTS = 200
-    EXACTLY_THREE_POINTS = 300
+    MORE_THAN_THREE_POINTS = 1
+    EXACTLY_THREE_POINTS = 3
+
+    points += EXACTLY_THREE_POINTS
 
     print("start remove diagonal")
     # Start removing diagonally. Loop is based on cols. We subtract 3 from row to account for already processed tiles
