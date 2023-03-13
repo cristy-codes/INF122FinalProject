@@ -9,8 +9,8 @@ class Board(QGridLayout):
         super().__init__()
         self.rows = rows
         self.cols = cols
-        # self.colors = ["black", "cyan", "green", "red", "yellow", "magenta", "blue", "gray"]
-        self.colors = ["black", "cyan", "green", "red"] #   FOR TESTING ONLY
+        self.colors = ["black", "cyan", "green", "red", "yellow", "magenta", "blue", "gray"]
+        # self.colors = ["black", "cyan", "green", "red"] #   FOR TESTING ONLY
         self.table = [[None for _ in range(cols)] for _ in range(rows)] # set up blank 2D list that represents the board
         
         # create labels for score and add to display
