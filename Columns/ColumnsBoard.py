@@ -9,8 +9,6 @@ class ColumnsBoard(Board):
     super().__init__(rows, cols)
     self.handler = handler
 
-    self.colors = ["black", "cyan", "green", "red"]
-
     self.maxTime = 140
 
     # set up the board
