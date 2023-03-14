@@ -4,6 +4,7 @@ from BaseGame.Tile import Tile
 from BaseGame.TurnEvent import TurnEvent
 from BaseGame.Score import Score
 from PyQt5.QtWidgets import QMessageBox
+from BaseGame.SaveScore import SaveScore
 
 class GameController:
     def __init__(self, conditions:GameConditions, turn:TurnEvent):
@@ -29,8 +30,9 @@ class GameController:
     def checkGameOver(self):
         ### stop game if the game is over
         if (self.conditions.gameOverCondition(self.board)):
-            QMessageBox.information(None, "GAME OVER!", "You ran out of space!")
             self.stop()
+            self.save_score(self.score.getCurrentPoints())
+
         ### iterate through another turn
         else:
             self.gameTurn.processTurn(self.board)
@@ -46,3 +48,7 @@ class GameController:
         for tileList in self.board.table:
             for tile in tileList:
                 tile.disable()
+
+    def save_score(self, score):
+        dialog = SaveScore(score, "COL")
+        dialog.exec_()

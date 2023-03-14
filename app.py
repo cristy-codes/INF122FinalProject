@@ -1,7 +1,8 @@
 import sys
 from PyQt5.QtWidgets import QApplication, QMainWindow, QLabel, QPushButton
 from Memory.MemoryGame import MemoryGame
-from ScoreBoard.ScoreBoard import ScoreBoard
+from ScoreBoard.MTScoreBoard import MTScoreBoard
+from ScoreBoard.COLScoreBoard import COLScoreBoard
 from Columns.ColumnsGame import ColumnsGame
 
 class App(QMainWindow):
@@ -14,23 +15,27 @@ class App(QMainWindow):
         
         # buttons for each game
         self.mt_button = QPushButton("Match Tiles", self)
-        self.mt_button.setGeometry(50, 100, 100, 30)
+        self.mt_button.setGeometry(50, 100, 150, 30)
         self.mt_button.clicked.connect(self.select_mt)
         
         self.col_button = QPushButton("Columns", self)
-        self.col_button.setGeometry(50, 150, 100, 30)
+        self.col_button.setGeometry(50, 150, 150, 30)
         self.col_button.clicked.connect(self.select_col)
 
-        self.score_button = QPushButton("Scoreboard", self)
-        self.score_button.setGeometry(50, 200, 100, 30)
-        self.score_button.clicked.connect(self.select_score)
+        self.score_button = QPushButton("Match Tiles Scoreboard", self)
+        self.score_button.setGeometry(50, 200, 150, 30)
+        self.score_button.clicked.connect(self.select_mtScore)
+
+        self.score_button = QPushButton("Columns Scoreboard", self)
+        self.score_button.setGeometry(50, 250, 150, 30)
+        self.score_button.clicked.connect(self.select_colScore)
         
         # status label
         self.status = QLabel("", self)
-        self.status.setGeometry(50, 250, 200, 30)
+        self.status.setGeometry(50, 300, 200, 30)
 
         # Set the window properties
-        self.setGeometry(100, 100, 300, 300)
+        self.setGeometry(100, 100, 350, 400)
         self.setWindowTitle("Game Selection")
         
     def select_mt(self):
@@ -47,9 +52,15 @@ class App(QMainWindow):
         dialog.show()
         dialog.exec_()
 
-    def select_score(self):
-        self.status.setText("View Scores")
-        dialog = ScoreBoard()
+    def select_mtScore(self):
+        self.status.setText("View Match Tiles Scores")
+        dialog = MTScoreBoard()
+        dialog.show()
+        dialog.exec_()
+
+    def select_colScore(self):
+        self.status.setText("View Columns Scores")
+        dialog = COLScoreBoard()
         dialog.show()
         dialog.exec_()
     

@@ -11,7 +11,7 @@ class ColumnsBoard(Board):
 
     self.colors = ["black", "cyan", "green", "red"]
 
-    self.maxTime = 140
+    self.maxTime = 5
 
     # set up the board
     self.setBoard()
@@ -49,6 +49,6 @@ class ColumnsBoard(Board):
     # sets the label to remaining time left, subtracts time
     self.decrementTime()
     # check if there is time remaining
-    if (self.maxTime == 0): # time over
-      QMessageBox.information(None, "GAME OVER!", "You ran out of time!")
-      self.timerStop()
+    # if (self.maxTime == 0): # time over
+    #   QMessageBox.information(None, "GAME OVER!", "You ran out of time!")
+    #   self.timerStop()

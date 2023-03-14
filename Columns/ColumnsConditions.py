@@ -2,16 +2,22 @@ from Columns.ColumnsBoard import ColumnsBoard
 from Columns.ColumnsTile import ColumnsTile
 from BaseGame.GameConditions import GameConditions
 from BaseGame.Score import Score
-
+from PyQt5.QtWidgets import QMessageBox
 
 class ColumnsConditions(GameConditions):
     def __init__(self, maxTime):
         super().__init__(maxTime)
 
     # check if there is a tile doesn't have default color in top row
-    def determineGameOver(self, board: ColumnsBoard):
+    def gameOverCondition(self, board: ColumnsBoard):
+        if (board.maxTime == 0): # time over
+            QMessageBox.information(None, "GAME OVER!", "You ran out of time!")
+            board.timerStop()
+            return True
+        
         for tile in board.table[0]:
             if not (tile.hasDefaultColor()):
+                QMessageBox.information(None, "GAME OVER!", "You ran out of room!")
                 return True
         return False
 

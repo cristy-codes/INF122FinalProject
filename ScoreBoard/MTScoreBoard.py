@@ -2,22 +2,16 @@ import sys
 
 from PyQt5.QtWidgets import QApplication, QWidget, QDialog, QVBoxLayout, QLabel
 
-from Memory.MemoryBoard import MemoryBoard
-from Memory.MemoryConditions import MemoryConditions
-from Memory.MemoryController import MemoryController
-from Memory.MemoryTurn import MemoryTurn
-
-
-class ScoreBoard(QDialog):
+class MTScoreBoard(QDialog):
     def __init__(self):
         super().__init__()
         self.setGeometry(200, 100, 300, 300)
-        self.setWindowTitle("Scoreboard")
+        self.setWindowTitle("Match Tiles Scoreboard")
         self.setModal(True)
 
         layout = QVBoxLayout()
 
-        with open('scoreboard.txt') as f:
+        with open('memoryScoreboard.txt') as f:
             # read the lines in the file and only show first 10 lines
             lines = f.readlines()[:10]
             # sort the lines by score in descending order
@@ -31,6 +25,6 @@ class ScoreBoard(QDialog):
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
-    window = ScoreBoard()   
+    window = MTScoreBoard()   
     window.show()
     sys.exit(app.exec())

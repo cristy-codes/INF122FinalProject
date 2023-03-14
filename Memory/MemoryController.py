@@ -1,12 +1,12 @@
 from PyQt5.QtCore import QTimer, Qt
 from PyQt5.QtWidgets import QLabel, QInputDialog
 
-
 from BaseGame.GameController import GameController
 from BaseGame.Tile import Tile
 from BaseGame.Score import Score
 from Memory.MemoryEndingMessage import MemoryEndingMessage
-from Memory.MemoryScore import MemoryScore
+# from Memory.MemoryScore import MemoryScore
+from BaseGame.SaveScore import SaveScore
 
 class MemoryController(GameController):
     def __init__(self, conditions, turn):
@@ -22,13 +22,11 @@ class MemoryController(GameController):
 
     def save_score(self, score):
         # Show the score dialog and wait for it to close
-        dialog = MemoryScore(score)
+        dialog = SaveScore(score, "MT")
         dialog.exec_()
 
         # # Update the scoreboard display
         # self.board.scoreboard.load_scores()
-
-
 
     def stop_timer(self):
         self.board.timer.stop()
