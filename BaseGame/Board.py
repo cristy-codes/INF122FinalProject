@@ -1,9 +1,8 @@
-from PyQt5.QtWidgets import QApplication, QWidget, QGridLayout, QPushButton
+from PyQt5.QtWidgets import QGridLayout
 from BaseGame.Tile import Tile
-from abc import ABC, abstractmethod 
-from PyQt5.QtWidgets import QLabel, QMessageBox
+from abc import abstractmethod 
+from PyQt5.QtWidgets import QLabel
 from PyQt5.QtCore import Qt, QTimer
-from Columns.ColumnsTile import ColumnsTile
 
 class Board(QGridLayout):
     def __init__(self, rows, cols):
@@ -39,15 +38,6 @@ class Board(QGridLayout):
         # sets the label to remaining time left
         self.timerLabel.setText('{:02d}:{:02d}'.format(self.maxTime//60, self.maxTime%60))
 
-    # # Starts timer
-    # def timerStart(self):
-    #     # starts timer with set interval (1 sec)
-    #     self.timer.start(1000)
-
-    # # Stops timer
-    # def timerStop(self):
-    #     self.timer.stop()
-
     # sets up the labels for the timer, and instantiates the timer object itself
     def createTimer(self, maxTime:int, timerCountdown):
         # set up timer labels
@@ -65,8 +55,6 @@ class Board(QGridLayout):
         self.timer.start(1000)
 
     # Function that is called every second (that the timer counts down)
-    # SHOULD CALL GAMECONDITIONS TO DETERMINE IF GAME ENDED
-    # CHECK IF GAME OVER 2 WAYS: ON CLICK AND EVERY SEC
     def timerCountdown(self):
         self.decrementTime()
         # if there is no more time remaining, declare a game loss.

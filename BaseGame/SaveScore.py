@@ -13,19 +13,23 @@ class SaveScore(QDialog):
 
         self.score = score
 
+        # score display
         score_label = QLabel(f"Your score: {self.score}")
         score_label.setAlignment(Qt.AlignCenter)
 
+        # prompt for initials 
         initials_label = QLabel("Enter your initials (3 letters):")
         self.initials_edit = QLineEdit()
         self.initials_edit.setMaxLength(3)
 
+        # save and cancel button options
         save_button = QPushButton("Save")
         save_button.clicked.connect(self.save_score)
 
         cancel_button = QPushButton("Cancel")
         cancel_button.clicked.connect(self.close)
 
+        # insert buttons/input fields to window
         button_layout = QHBoxLayout()
         button_layout.addWidget(save_button)
         button_layout.addWidget(cancel_button)
@@ -39,10 +43,12 @@ class SaveScore(QDialog):
         self.setLayout(layout)
 
     def save_score(self):
+        # make sure initials is 3 characters 
         initials = self.initials_edit.text().upper()
         if len(initials) != 3:
             return
 
+        # determine which scoreboard to write to
         if self.game == "MT":
             with open("memoryScoreboard.txt", "a") as f:
                 f.write(f"{self.score} {initials}\n")

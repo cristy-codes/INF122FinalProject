@@ -14,4 +14,6 @@ class Score():
     def getCurrentPoints(self):
         return self.score
     
-    
+    # setter for current points
+    def setCurrentPoints(self, points: int):
+        self.score = points

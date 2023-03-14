@@ -45,13 +45,3 @@ class ColumnsBoard(Board):
   ######################################
   def createTile(self, row, col):
     return ColumnsTile(row, col, None, self.handler)
-
-  ######################################
-  # # function call every second
-  # def timerCountdown(self):
-  #   # sets the label to remaining time left, subtracts time
-  #   self.decrementTime()
-  #   # check if there is time remaining
-  #   if (self.maxTime == 0): # time over
-  #     QMessageBox.information(None, "GAME OVER!", "You ran out of time!")
-  #     self.timerStop()

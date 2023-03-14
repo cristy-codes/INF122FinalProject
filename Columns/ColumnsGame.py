@@ -11,7 +11,6 @@ class ColumnsGame(QDialog):
     def __init__(self, rows=24, cols=6, maxTime=100):
         #Initilizes attributtes
         super().__init__()
-        # self.conditions = ColumnsConditions(maxTime)
         self.columnsTurn = ColumnsTurn()    #Instanciate a Game Turn
         self.controller = ColumnsController(self.columnsTurn) #Instanciate a Controller
         self.board = ColumnsBoard(rows, cols, self.controller.processPlayerMove) #Create a Board with the specified dimensions

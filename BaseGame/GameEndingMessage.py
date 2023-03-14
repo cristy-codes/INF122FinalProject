@@ -1,7 +1,7 @@
 from PyQt5.QtWidgets import QMessageBox
 
 
-class MemoryEndingMessage:
+class GameEndingMessage:
     def __init__(self, message):
         # set up message box for victory
         msg = QMessageBox()

@@ -11,8 +11,6 @@ from Memory.MemoryTurn import MemoryTurn
 class MemoryGame(QDialog):
     def __init__(self):
         super().__init__()
-        # initialize conditions for the game
-        # self.conditions = MemoryConditions(9999)
         # initialize a game turn
         self.turn = MemoryTurn()
         # initialize the game controller

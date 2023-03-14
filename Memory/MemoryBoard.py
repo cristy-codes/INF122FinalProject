@@ -57,25 +57,6 @@ class MemoryBoard(Board):
 
         for i in range(self.get_rows()):
             for j in range(self.get_cols()):
-                # new_tile = self.createTile(i, j)
-                # self.table[i][j] = new_tile
                 self.table[i][j] = self.createTile(i, j)
                 self.addWidget(self.table[i][j], i, j)
                 self.buttons.append(self.table[i][j])
-
-    # Function that is called every second (that the timer counts down)
-    # def timerCountdown(self):
-    #     # sets the label to remaining time left, subtracts time
-    #     self.decrementTime()
-    #     # if there is no more time remaining, declare a
-    #     # game loss.
-    #     if self.maxTime == 0:
-    #         self.timer.stop()
-    #         QMessageBox.information(None, "Time's up!", "You ran out of time.")
-
-
-
-
-
-
- 
