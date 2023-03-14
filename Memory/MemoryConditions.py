@@ -9,7 +9,7 @@ class MemoryConditions(GameConditions):
         super().__init__(maxTime)
 
     # function that determines whether or not the game is still active or over
-    def gameOverCondition(self, board: MemoryBoard):
+    def determineGameOver(self, board: MemoryBoard):
         pass
     
     # calculates points

@@ -14,7 +14,7 @@ class ColumnsGame(QDialog):
         self.conditions = ColumnsConditions(maxTime)
         self.columnsTurn = ColumnsTurn()    #Instanciate a Game Turn
         self.controller = ColumnsController(self.conditions, self.columnsTurn) #Instanciate a Controller
-        self.board = ColumnsBoard(rows, cols, self.controller.processPlayerMove) #Create a Board with the specified dimensions
+        self.board = ColumnsBoard(rows, cols, self.controller.handler) #Create a Board with the specified dimensions
         self.controller.setBoard(self.board) #give the controller object the board
         self.controller.start() #start the controller, which starts the game
 

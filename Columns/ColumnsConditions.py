@@ -40,7 +40,6 @@ class ColumnsConditions(GameConditions):
         return round((1.05 ** score) * score * PPB) if (score > 3) else (score * PPB)
 
 
-
 ### HELPER functions ###
 
 def swapColor(tileFrom: ColumnsTile, tileTo: ColumnsTile):

@@ -1,12 +1,11 @@
 from PyQt5.QtCore import QTimer, Qt
-from PyQt5.QtWidgets import QLabel, QInputDialog
+from PyQt5.QtWidgets import QLabel
 
 
 from BaseGame.GameController import GameController
 from BaseGame.Tile import Tile
-from BaseGame.Score import Score
 from Memory.MemoryEndingMessage import MemoryEndingMessage
-from Memory.MemoryScore import MemoryScore
+
 
 class MemoryController(GameController):
     def __init__(self, conditions, turn):
@@ -20,21 +19,11 @@ class MemoryController(GameController):
 
         self.game_over = False
 
-    def save_score(self, score):
-        # Show the score dialog and wait for it to close
-        dialog = MemoryScore(score)
-        dialog.exec_()
-
-        # # Update the scoreboard display
-        # self.board.scoreboard.load_scores()
-
-
-
     def stop_timer(self):
         self.board.timer.stop()
 
         ### called when the tile is clicked; houses all clicked functionality
-    def processPlayerMove(self, tile: Tile):
+    def handler(self, tile: Tile):
         '''
         STRUCTURE FROM GAMECONTROLLER
 
@@ -57,22 +46,15 @@ class MemoryController(GameController):
                 if self.clicked_buttons[0].color == self.clicked_buttons[1].color:
                     self.matched_buttons.extend(self.clicked_buttons)
                     self.clicked_buttons = []
-                    
-                    ####### CALCULATE/ADD SCORE #######
                     currScore = len(self.matched_buttons * 5)
                     self.board.scoreLabel.setText(str(currScore))
-                    ####### CALCULATE/ADD SCORE #######
-                    
-                    ####### GAME LOOP #######
-                    # if all tiles are matched, output a win and the player's score. 
+                    # if all tiles are matched, output a win and the player's score.
                     if len(self.matched_buttons) == self.total_buttons:
                         if self.board.timer is not None and self.board.timer.isActive():
-                            time_remaining = self.board.maxTime
+                            time_remaining = self.board.timer.remainingTime()
                             self.stop_timer()
-                            score = currScore + time_remaining
-                            MemoryEndingMessage("You won! Your score is: " + str(score))
-                            self.board.itemAt(1).widget().setText(str(score))
-                            self.save_score(score)
+                            MemoryEndingMessage("You won! Your score is: " + str(currScore + time_remaining))
+                            self.board.itemAt(1).widget().setText(str(currScore + time_remaining))
                 # if the 2 clicked tiles don't match, flip them back over after a second
                 else:
                     QTimer.singleShot(1000, self.hide_clicked_buttons)
@@ -84,3 +66,7 @@ class MemoryController(GameController):
             button.setEnabled(True)
         self.clicked_buttons = [] 
 
+
+
+
+#

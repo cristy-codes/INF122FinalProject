@@ -18,7 +18,7 @@ class MemoryGame(QDialog):
         # initialize the game controller
         self.controller = MemoryController(self.conditions, self.turn)
         # initialize the size of the board
-        self.board = MemoryBoard(4, 4, self.controller.processPlayerMove)
+        self.board = MemoryBoard(4, 4, self.controller.handler)
         # assign the board to the game controller
         self.controller.setBoard(self.board)
 

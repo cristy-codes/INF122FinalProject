@@ -1,5 +1,4 @@
-from abc import ABC, abstractmethod
-from BaseGame import Board
+from abc import ABC, abstractmethod 
 
 class TurnEvent(ABC):
     def __init__(self):
@@ -7,5 +6,5 @@ class TurnEvent(ABC):
 
     # contains what happens during a turn within a game
     @abstractmethod
-    def processTurn(self, board:Board):
+    def processTurn(self):
         pass
