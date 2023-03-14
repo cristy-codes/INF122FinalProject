@@ -157,6 +157,7 @@ def matchingAlgorithm(board: ColumnsBoard):
                                                                 range(col + 3, board.get_cols(), 1), row, points)
 
                   # check diagonals
+                  print("check diagonals")
                   if col + 1 in row_range and col + 2 in row_range:  # if next two blocks diagonally in range,
                       # diag/up
                       if row - 1 in col_range and row - 2 in col_range:  # if next two blocks diag/up in range,
@@ -164,6 +165,7 @@ def matchingAlgorithm(board: ColumnsBoard):
                                                                 col + 1).getColor():  # and if diag/up matches color,
                               if curr_board_color == board.getTile(row - 2,
                                                                     col + 2).getColor():  # if 2nd diag/up also matches
+                                  print("in check diagonals")
                                   # set scanned three to white
                                   new_board.getTile(row, col).setColor("white")
                                   new_board.getTile(row - 1, col + 1).setColor("white")
@@ -176,10 +178,9 @@ def matchingAlgorithm(board: ColumnsBoard):
                                   has_fallen = True  # run again
 
                                   if col+3 < board.get_cols() and row-3 >= 0:
-
-
                                       remove_diagonal(curr_board_color, board, new_board,
-                                                      range(col + 3, board.get_cols(), 1), row - 3, points, "UP")
+                                                      range(col + 3, board.get_cols(), 1), col_range, row - 3,
+                                                      points, "UP")
 
                       # diag/down
                       if row + 1 in col_range and row + 2 in col_range:  # if next two blocks diag/down in range,
@@ -199,7 +200,6 @@ def matchingAlgorithm(board: ColumnsBoard):
                                   has_fallen = True  # run again
 
                                   if col+3 < board.get_cols() and row+3 < board.get_rows():
-
                                       remove_diagonal(curr_board_color, board, new_board,
                                                       range(col + 3, board.get_cols(), 1), col_range, row + 3,
                                                       points, "DOWN")
