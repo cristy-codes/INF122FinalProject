@@ -7,11 +7,12 @@ from Columns.ColumnsTile import ColumnsTile
 from Columns.ColumnsBoard import ColumnsBoard
 from PyQt5.QtWidgets import QMessageBox
 from BaseGame.Score import Score
+from BaseGame.SaveScore import SaveScore
 import random
 
 class ColumnsController(GameController):
-  def __init__(self, conditions:ColumnsConditions, columnsTurn:ColumnsTurn):
-    super().__init__(conditions, columnsTurn)
+  def __init__(self, columnsTurn:ColumnsTurn):
+    super().__init__(columnsTurn)
 
   # starts GameController and timer
   def start(self):
@@ -25,13 +26,14 @@ class ColumnsController(GameController):
     # self.board.timer.stop()
     self.board.disableAllTiles()
 
+  # CORE CLICK FUNCTIONALITY, ALL THIS STUFF HAPPENS ONCE A TILE IS CLICKED
   def processPlayerMove(self, tile):
-        self.dropQueuedColumn(tile, self.board)
-        self.pointSystem(self.score, self.board)
-        self.checkGameOver()
+      self.processUserInput(tile, self.board)
+      self.pointSystem(self.score, self.board)
+      self.checkGameOver()
 
   # drop the three queued tiles on the tile's column
-  def dropQueuedColumn(self, tile: ColumnsTile, board: ColumnsBoard):
+  def processUserInput(self, tile: ColumnsTile, board: ColumnsBoard):
       # set tiles from queue to the top three rows in the tile's column
       swapColor(board.getTile(0, tile.col), board.column[0])
       swapColor(board.getTile(1, tile.col), board.column[1])
@@ -84,6 +86,10 @@ class ColumnsController(GameController):
             color = random.choice(board.get_colors()[1:7])
             # set ith column tile to color
             board.column[i].setColor(color)
+
+  def save_score(self, score):
+      dialog = SaveScore(score, "COL")
+      dialog.exec_()
 
 
 ### HELPER functions ###

@@ -20,7 +20,7 @@ class MemoryBoard(Board):
             self.board_colors.append(color)
             self.board_colors.append(color)
 
-        self.maxTime = 2
+        self.maxTime = 45
 
         # set the board
         self.setBoard()

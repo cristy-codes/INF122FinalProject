@@ -72,8 +72,6 @@ class Board(QGridLayout):
         # if there is no more time remaining, declare a game loss.
         if self.maxTime == 0:
             self.timer.stop()
-            self.disableAllTiles()
-            QMessageBox.information(None, "Time's up!", "You ran out of time.")
     
     #### TIMER STUFF END, COULD BE MOVED TO ITS OWN CLASS ####
 
