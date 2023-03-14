@@ -201,7 +201,8 @@ def matchingAlgorithm(board: ColumnsBoard):
                                   if col+3 < board.get_cols() and row+3 < board.get_rows():
 
                                       remove_diagonal(curr_board_color, board, new_board,
-                                                      range(col + 3, board.get_cols(), 1), row + 3, points, "DOWN")
+                                                      range(col + 3, board.get_cols(), 1), col_range, row + 3,
+                                                      points, "DOWN")
 
               else:
                   # debug
@@ -272,8 +273,8 @@ def remove_right(color: str, board: ColumnsBoard, new_board: ColumnsBoard, lefto
   return points, new_board
 
 
-def remove_diagonal(color: str, board: ColumnsBoard, new_board: ColumnsBoard, leftover_range: range, remove_row: int,
-                  points: int, diagonal_type: str):
+def remove_diagonal(color: str, board: ColumnsBoard, new_board: ColumnsBoard, leftover_range: range, col_range: range,
+                    remove_row: int, points: int, diagonal_type: str):
   #### REPLACE with algorithm that determines how many points gained for removals ####
   MORE_THAN_THREE_POINTS = 1
   EXACTLY_THREE_POINTS = 3
@@ -286,23 +287,25 @@ def remove_diagonal(color: str, board: ColumnsBoard, new_board: ColumnsBoard, le
       print("in here")
       print(board.getTile(remove_row, remove_col).getColor())
       # if same color, continue removing
-      if color == board.getTile(remove_row, remove_col).getColor():
-          print("another one")
-          # remove & fall row
-          new_board.getTile(remove_row, remove_col).setColor("white")
-          fallColumn(new_board, remove_col)
+      if remove_row in col_range:
+            if color == board.getTile(remove_row, remove_col).getColor():
+              print("another one")
+              # remove & fall row
+              new_board.getTile(remove_row, remove_col).setColor("white")
+              fallColumn(new_board, remove_col)
 
-          # update points
-          points += MORE_THAN_THREE_POINTS
+              # update points
+              points += MORE_THAN_THREE_POINTS
 
-          # iterates up if diagonal/up, iterates down if diagonal/down
-          if diagonal_type.upper() == "UP":
-              remove_row += 1  # increment row
-          else:
-              remove_row -= 1  # decrement row
-
+              # iterates up if diagonal/up, iterates down if diagonal/down
+              if diagonal_type.upper() == "UP":
+                  remove_row += 1  # increment row
+              else:
+                  remove_row -= 1  # decrement row
+            else:
+                return points, new_board  # if color doesn't match initial color, exit loop
       else:
-          return points, new_board  # if color doesn't match initial color, exit loop
+          return points, new_board  # if row out of range, exit loop
   # end remove_row loop
   return points, new_board
 

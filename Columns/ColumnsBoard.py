@@ -11,7 +11,7 @@ class ColumnsBoard(Board):
 
     self.colors = ["black", "cyan", "green", "red"]
 
-    self.maxTime = 5
+    self.maxTime = 240
 
     # set up the board
     self.setBoard()
