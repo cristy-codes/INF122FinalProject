@@ -1,13 +1,11 @@
 from BaseGame.Board import Board
-from BaseGame.TurnEvent import TurnEvent
 from BaseGame.Score import Score
 
 from abc import abstractmethod
 
 class GameController:
-    def __init__(self, turn:TurnEvent):
+    def __init__(self):
         self.board = None
-        self.gameTurn = turn
         self.score = Score() ## for tracking score
 
     # set board variable

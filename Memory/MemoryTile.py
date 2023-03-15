@@ -24,19 +24,9 @@ class MemoryTile(Tile):
         self.color = temp
         self.display()
 
-    # disable the tile from being clicked
-    def disable(self):
-        if self.connect:
-            self.connect = False
-            self.clicked.disconnect()
-
     # determine if another tile matches this one
     def match(self, other_tile):
         if self.color == other_tile.color:
             return True
         else:
             return False
-
-    # Function that occurs on click.
-    def call(self, a):
-        pass

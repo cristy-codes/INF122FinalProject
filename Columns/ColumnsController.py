@@ -1,4 +1,3 @@
-from Columns.ColumnsTurn import ColumnsTurn
 from BaseGame.GameController import GameController
 
 from Columns.ColumnsTile import ColumnsTile
@@ -9,8 +8,8 @@ from BaseGame.GameEndingMessage import GameEndingMessage
 import random
 
 class ColumnsController(GameController):
-  def __init__(self, columnsTurn:ColumnsTurn):
-    super().__init__(columnsTurn)
+  def __init__(self):
+    super().__init__()
 
   # start processing the first turn
   def start(self):
@@ -51,7 +50,7 @@ class ColumnsController(GameController):
       ### stop game if a column is completely full
       else:
           for tile in self.board.table[0]:
-            if not (tile.hasDefaultColor()):
+            if not (tile.hasEmptyTileColor()):
                 self.board.timer.stop()
                 GameEndingMessage("You ran out of room! Your score is: " + str(self.score.getCurrentPoints()))
                 self.save_score(self.score.getCurrentPoints())
@@ -124,9 +123,9 @@ def matchingAlgorithm(board: ColumnsBoard):
                               print(board.getTile(row - 2, col).getColor())
 
                               # set scanned three to white
-                              new_board.getTile(row, col).setColor("white")
-                              new_board.getTile(row - 1, col).setColor("white")
-                              new_board.getTile(row - 2, col).setColor("white")
+                              new_board.getTile(row, col).clearTile()
+                              new_board.getTile(row - 1, col).clearTile()
+                              new_board.getTile(row - 2, col).clearTile()
 
                               # continues deletion
                               points, new_board = remove_up(curr_board_color, board, new_board,
@@ -142,9 +141,9 @@ def matchingAlgorithm(board: ColumnsBoard):
                           if curr_board_color == board.getTile(row,
                                                                 col + 2).getColor():  # if 2nd right also matches color,
                               # set scanned three to white
-                              new_board.getTile(row, col).setColor("white")
-                              new_board.getTile(row, col + 1).setColor("white")
-                              new_board.getTile(row, col + 2).setColor("white")
+                              new_board.getTile(row, col).clearTile()
+                              new_board.getTile(row, col + 1).clearTile()
+                              new_board.getTile(row, col + 2).clearTile()
 
                               # make individual columns fall
                               fallColumn(new_board, col)
@@ -167,9 +166,9 @@ def matchingAlgorithm(board: ColumnsBoard):
                                                                     col + 2).getColor():  # if 2nd diag/up also matches
                                   print("in check diagonals")
                                   # set scanned three to white
-                                  new_board.getTile(row, col).setColor("white")
-                                  new_board.getTile(row - 1, col + 1).setColor("white")
-                                  new_board.getTile(row - 2, col + 2).setColor("white")
+                                  new_board.getTile(row, col).clearTile()
+                                  new_board.getTile(row - 1, col + 1).clearTile()
+                                  new_board.getTile(row - 2, col + 2).clearTile()
 
                                   # make columns fall
                                   fallColumn(new_board, col)
@@ -189,9 +188,9 @@ def matchingAlgorithm(board: ColumnsBoard):
                               if curr_board_color == board.getTile(row + 2,
                                                                     col + 2).getColor():  # if 2nd diag/down matches
                                   # set scanned three to white
-                                  new_board.getTile(row, col).setColor("white")
-                                  new_board.getTile(row + 1, col + 1).setColor("white")
-                                  new_board.getTile(row + 2, col + 2).setColor("white")
+                                  new_board.getTile(row, col).clearTile()
+                                  new_board.getTile(row + 1, col + 1).clearTile()
+                                  new_board.getTile(row + 2, col + 2).clearTile()
 
                                   # make columns fall
                                   fallColumn(new_board, col)
@@ -238,7 +237,7 @@ def remove_up(color: str, board: ColumnsBoard, new_board: ColumnsBoard, leftover
       # if same color, continue removing
       if color == board.getTile(remove_row, col).getColor():
           print("another one")
-          new_board.getTile(remove_row, col).setColor("white")
+          new_board.getTile(remove_row, col).clearTile()
           points += MORE_THAN_THREE_POINTS
       else:
           return points, new_board  # if color doesn't match initial color, exit loop
@@ -263,7 +262,7 @@ def remove_right(color: str, board: ColumnsBoard, new_board: ColumnsBoard, lefto
       if color == board.getTile(row, remove_col).getColor():
           print("another one")
           # remove & fall row
-          new_board.getTile(row, remove_col).setColor("white")
+          new_board.getTile(row, remove_col).clearTile()
           fallColumn(new_board, remove_col)
           # update points
           points += MORE_THAN_THREE_POINTS
@@ -291,7 +290,7 @@ def remove_diagonal(color: str, board: ColumnsBoard, new_board: ColumnsBoard, le
             if color == board.getTile(remove_row, remove_col).getColor():
               print("another one")
               # remove & fall row
-              new_board.getTile(remove_row, remove_col).setColor("white")
+              new_board.getTile(remove_row, remove_col).clearTile()
               fallColumn(new_board, remove_col)
 
               # update points
@@ -320,11 +319,11 @@ def fallColumn(board: ColumnsBoard, col: int):
   # until stop is out-of-bounds, meaning that there is no more colored tiles that should be dropped
   while not stop < 0:
       # if start is not a default color tile, move both up
-      if not board.getTile(start, col).hasDefaultColor():
+      if not board.getTile(start, col).hasEmptyTileColor():
           start -= 1  # move up
           stop -= 1  # move up
       # if stop is a default color tile, move stop up
-      elif board.getTile(stop, col).hasDefaultColor():
+      elif board.getTile(stop, col).hasEmptyTileColor():
           stop -= 1  # move up
       # both, start is a non-default color and stop is a non-default color
       else:

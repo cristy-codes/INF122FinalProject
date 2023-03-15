@@ -3,18 +3,14 @@ import sys
 from PyQt5.QtWidgets import QApplication, QWidget, QDialog
 
 from Memory.MemoryBoard import MemoryBoard
-from Memory.MemoryConditions import MemoryConditions
 from Memory.MemoryController import MemoryController
-from Memory.MemoryTurn import MemoryTurn
 
 
 class MemoryGame(QDialog):
     def __init__(self):
         super().__init__()
-        # initialize a game turn
-        self.turn = MemoryTurn()
         # initialize the game controller
-        self.controller = MemoryController(self.turn)
+        self.controller = MemoryController()
         # initialize the size of the board
         self.board = MemoryBoard(4, 4, self.controller.processPlayerMove)
         # assign the board to the game controller

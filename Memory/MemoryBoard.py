@@ -1,7 +1,6 @@
 import random
 
 from PyQt5.QtCore import QTimer, Qt
-from PyQt5.QtWidgets import QMessageBox, QLabel
 from BaseGame.Board import Board
 from Memory.MemoryTile import MemoryTile
 
@@ -42,7 +41,7 @@ class MemoryBoard(Board):
 
     ######################################    
     # create an individual tile
-    def createTile(self, row, col, color="white"):
+    def createTile(self, row, col, color="black"):
         back_color = random.choice(self.board_colors)
         self.board_colors.remove(back_color)
         return MemoryTile(color, back_color, row, col, self.handler)

@@ -9,8 +9,8 @@ from BaseGame.SaveScore import SaveScore
 from Memory.MemoryBoard import MemoryBoard
 
 class MemoryController(GameController):
-    def __init__(self, turn):
-        super().__init__(turn)
+    def __init__(self):
+        super().__init__()
         self.first_tile = None
         self.second_tile = None
 
@@ -28,18 +28,31 @@ class MemoryController(GameController):
             self.clicked_buttons.append(tile)
 
             if len(self.clicked_buttons) == 2:
-                # if the 2 clicked tiles match then track them
+                # if the 2 clicked tiles match then track and clear them
                 if self.clicked_buttons[0].color == self.clicked_buttons[1].color:
-                    self.matched_buttons.extend(self.clicked_buttons)
+                    # print("b1 row: ", self.clicked_buttons[0].getRow(), " b1 col: ", self.clicked_buttons[0].getCol())
+                    # print("b1: ", self.clicked_buttons[0])
+                    # print("b2 row: ", self.clicked_buttons[1].getRow(), " b2 col: ", self.clicked_buttons[1].getCol())
+                    # print("b2: ", self.clicked_buttons[1])
 
-                    # 2 code snippets to "destroy" the tiles; will resize the grid
-                    # could probably reference the board itself but not sure
+                    # print()
 
-                    # self.clicked_buttons[0].setParent(None)
-                    # self.clicked_buttons[1].setParent(None)
+                    # print(board.table[self.clicked_buttons[0].getRow()][self.clicked_buttons[0].getCol()])
+                    # print(board.table[self.clicked_buttons[1].getRow()][self.clicked_buttons[1].getCol()])
 
-                    # self.clicked_buttons[0].hide()
-                    # self.clicked_buttons[1].hide()
+                    # self.matched_buttons.extend(self.clicked_buttons)
+
+                    # board.table[self.clicked_buttons[0].getRow()][self.clicked_buttons[0].getCol()].clearTile()
+                    # board.table[self.clicked_buttons[1].getRow()][self.clicked_buttons[1].getCol()].clearTile()
+
+                    # board.table[self.clicked_buttons[0].getRow()][self.clicked_buttons[0].getCol()].disable()
+                    # board.table[self.clicked_buttons[1].getRow()][self.clicked_buttons[1].getCol()].disable()
+
+                    self.clicked_buttons[0].clearTile()
+                    self.clicked_buttons[1].clearTile()
+
+                    self.clicked_buttons[0].disable()
+                    self.clicked_buttons[1].disable()
 
                     self.clicked_buttons = []
                     

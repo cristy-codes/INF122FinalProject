@@ -6,6 +6,7 @@ Tile class : inherits from QPushButton
 @variable color:string - the color of the button
 """
 class Tile(QPushButton):
+    emptyTileColor = "white"
     def __init__(self, color, row, col, callback:callable=print):
         super().__init__()
         self.row = row
@@ -43,14 +44,6 @@ class Tile(QPushButton):
     def enable(self):
         self.clicked.connect(self.click)
 
-    # set callback function for the tile
-    def setCallback(self, callback):
-        self.callback = callback
-
-    # get callback function for the tile
-    def getCallback(self) -> callable:
-        return self.callback
-
     # actions that are performed once a tile is clicked
     def click(self):
         self.callback(self)
@@ -58,3 +51,15 @@ class Tile(QPushButton):
     # show the tile's color
     def display(self):
         self.setStyleSheet("background-color : " + self.color)
+
+    # mark tile as empty
+    def clearTile(self):
+        self.setColor(self.emptyTileColor)
+
+    # get the default color of the tile
+    def getEmptyTileColor(self):
+        return self.emptyTileColor
+
+    # determine if the tile has an assigned default color
+    def hasEmptyTileColor(self):
+        return self.getColor() == self.getEmptyTileColor()

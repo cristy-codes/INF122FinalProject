@@ -22,9 +22,9 @@ class ColumnsBoard(Board):
 
   def setStatusBar(self):
     # set up column tile that indicates the next blocks to place
-    self.column = [ColumnsTile("white", 0, 0),
-                   ColumnsTile("white", 0, 0),
-                   ColumnsTile("white", 0, 0)]
+    self.column = [ColumnsTile(0, 0),
+                   ColumnsTile(0, 0),
+                   ColumnsTile(0, 0)]
 
     # create label indicating what the next blocks are
     self.queuedBlocksLabel = QLabel("Next block:")
