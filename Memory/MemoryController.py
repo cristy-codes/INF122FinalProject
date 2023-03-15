@@ -73,7 +73,7 @@ class MemoryController(GameController):
                             self.save_score(score)
                 # if the 2 clicked tiles don't match, flip them back over after a second
                 else:
-                    QTimer.singleShot(1000, self.hide_clicked_buttons)
+                    QTimer.singleShot(500, self.hide_clicked_buttons)
 
     # hide the clicked buttons and stop tracking them
     def hide_clicked_buttons(self):

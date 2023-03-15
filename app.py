@@ -15,19 +15,19 @@ class App(QMainWindow):
         
         # buttons for each game
         self.mt_button = QPushButton("Match Tiles", self)
-        self.mt_button.setGeometry(50, 100, 150, 30)
+        self.mt_button.setGeometry(50, 100, 200, 30)
         self.mt_button.clicked.connect(self.select_mt)
         
         self.col_button = QPushButton("Columns", self)
-        self.col_button.setGeometry(50, 150, 150, 30)
+        self.col_button.setGeometry(50, 150, 200, 30)
         self.col_button.clicked.connect(self.select_col)
 
         self.score_button = QPushButton("Match Tiles Scoreboard", self)
-        self.score_button.setGeometry(50, 200, 150, 30)
+        self.score_button.setGeometry(50, 200, 200, 30)
         self.score_button.clicked.connect(self.select_mtScore)
 
         self.score_button = QPushButton("Columns Scoreboard", self)
-        self.score_button.setGeometry(50, 250, 150, 30)
+        self.score_button.setGeometry(50, 250, 200, 30)
         self.score_button.clicked.connect(self.select_colScore)
         
         # status label
