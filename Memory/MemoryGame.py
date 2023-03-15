@@ -11,12 +11,10 @@ from Memory.MemoryTurn import MemoryTurn
 class MemoryGame(QDialog):
     def __init__(self):
         super().__init__()
-        # initialize conditions for the game
-        self.conditions = MemoryConditions(9999)
         # initialize a game turn
         self.turn = MemoryTurn()
         # initialize the game controller
-        self.controller = MemoryController(self.conditions, self.turn)
+        self.controller = MemoryController(self.turn)
         # initialize the size of the board
         self.board = MemoryBoard(4, 4, self.controller.processPlayerMove)
         # assign the board to the game controller

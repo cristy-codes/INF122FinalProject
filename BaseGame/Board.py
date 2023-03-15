@@ -1,6 +1,6 @@
-from PyQt5.QtWidgets import QApplication, QWidget, QGridLayout, QPushButton
+from PyQt5.QtWidgets import QGridLayout
 from BaseGame.Tile import Tile
-from abc import ABC, abstractmethod 
+from abc import abstractmethod 
 from PyQt5.QtWidgets import QLabel
 from PyQt5.QtCore import Qt, QTimer
 
@@ -29,37 +29,14 @@ class Board(QGridLayout):
     
     def getTile(self, row:int, col:int) -> Tile:
         return self.table[row][col]
-    
-    # Create all Tiles and assign to table
-    @abstractmethod
-    def setBoard(self):
-        pass
-    
-    # Create an individual tile
-    @abstractmethod
-    def createTile(self, row, col, color="white"):
-        pass
 
-    # Function that is called every second (that the timer counts down)
-    @abstractmethod
-    def timerCountdown(self):
-        pass
-    
+    #### TIMER STUFF START, COULD BE MOVED TO ITS OWN CLASS ####
     # Subtracts time by 1 and updates corresponding label
     def decrementTime(self):
         # subtracts time
         self.maxTime -= 1
         # sets the label to remaining time left
         self.timerLabel.setText('{:02d}:{:02d}'.format(self.maxTime//60, self.maxTime%60))
-
-    # Starts timer
-    def timerStart(self):
-        # starts timer with set interval (1 sec)
-        self.timer.start(1000)
-
-    # Stops timer
-    def timerStop(self):
-        self.timer.stop()
 
     # sets up the labels for the timer, and instantiates the timer object itself
     def createTimer(self, maxTime:int, timerCountdown):
@@ -75,4 +52,30 @@ class Board(QGridLayout):
         # assign function that will be called every second
         self.timer.timeout.connect(timerCountdown)
         # start timer
-        self.timerStart()
+        self.timer.start(1000)
+
+    # Function that is called every second (that the timer counts down)
+    def timerCountdown(self):
+        self.decrementTime()
+        # if there is no more time remaining, declare a game loss.
+        if self.maxTime == 0:
+            self.timer.stop()
+    
+    #### TIMER STUFF END, COULD BE MOVED TO ITS OWN CLASS ####
+
+    def disableAllTiles(self):
+        for tileList in self.table:
+            for tile in tileList:
+                tile.disable()
+
+    ######################################
+    # Create all Tiles and assign to table
+    @abstractmethod
+    def setBoard(self):
+        pass
+    
+    ######################################
+    # Create an individual tile
+    @abstractmethod
+    def createTile(self, row, col, color="white"):
+        pass

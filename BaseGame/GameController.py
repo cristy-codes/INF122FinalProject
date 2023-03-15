@@ -1,15 +1,12 @@
 from BaseGame.Board import Board
-from BaseGame.GameConditions import GameConditions
-from BaseGame.Tile import Tile
 from BaseGame.TurnEvent import TurnEvent
 from BaseGame.Score import Score
-from PyQt5.QtWidgets import QMessageBox
-from BaseGame.SaveScore import SaveScore
+
+from abc import abstractmethod
 
 class GameController:
-    def __init__(self, conditions:GameConditions, turn:TurnEvent):
+    def __init__(self, turn:TurnEvent):
         self.board = None
-        self.conditions = conditions
         self.gameTurn = turn
         self.score = Score() ## for tracking score
 
@@ -17,38 +14,23 @@ class GameController:
     def setBoard(self, board:Board):
         self.board = board
 
-    ### called when the tile is clicked; houses all clicked functionality
-    def processPlayerMove(self, tile:Tile):
-        # do something when the tile is clicked
-        self.conditions.clickEvent(tile, self.board)
-        # calculate and add score
-        self.conditions.pointSystem(self.score, self.board)
-        # determine to either start another turn or end the game
-        self.checkGameOver()
+    # CORE CLICK FUNCTIONALITY, ALL THIS STUFF HAPPENS ONCE A TILE IS CLICKED
+    def processPlayerMove(self, tile):
+        self.processPlayerClick(tile, self.board)
+        self.pointSystem(self.score, self.board)
+        self.gameOverCondition()
 
-    ### mechanism to determine whether to end game or proceed to next turn
-    def checkGameOver(self):
-        ### stop game if the game is over
-        if (self.conditions.gameOverCondition(self.board)):
-            self.stop()
-            self.save_score(self.score.getCurrentPoints())
-
-        ### iterate through another turn
-        else:
-            self.gameTurn.processTurn(self.board)
+    # Modifies the board in some way once a tile is clicked
+    @abstractmethod
+    def processPlayerClick(self, tile, board):
+        pass
     
-    ### start the game
-    def start(self):
-        # run the first turn
-        self.gameTurn.processTurn(self.board)
+    # Calculates the score based on the board state
+    @abstractmethod 
+    def pointSystem(self, score, board):
+        pass 
     
-    ### stop the game 
-    def stop(self):
-        # disable all tiles on the board
-        for tileList in self.board.table:
-            for tile in tileList:
-                tile.disable()
-
-    def save_score(self, score):
-        dialog = SaveScore(score, "COL")
-        dialog.exec_()
+    # Determines whether or not to end or continue the game
+    @abstractmethod 
+    def gameOverCondition(self):
+        pass
