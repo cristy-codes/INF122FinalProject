@@ -19,8 +19,6 @@ class MemoryController(GameController):
         self.clicked_buttons = []
         self.matched_buttons = []
 
-        self.game_over = False
-
     def processPlayerClick(self, tile: Tile, board: MemoryBoard):
         # if the tile is facedown, flip it and track which tile is clicked
         if tile.face_down:
