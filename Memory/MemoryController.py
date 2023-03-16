@@ -8,6 +8,7 @@ from BaseGame.GameEndingMessage import GameEndingMessage
 from BaseGame.SaveScore import SaveScore
 from Memory.MemoryBoard import MemoryBoard
 
+
 class MemoryController(GameController):
     def __init__(self):
         super().__init__()
@@ -30,36 +31,24 @@ class MemoryController(GameController):
             if len(self.clicked_buttons) == 2:
                 # if the 2 clicked tiles match then track and clear them
                 if self.clicked_buttons[0].color == self.clicked_buttons[1].color:
-                    # print("b1 row: ", self.clicked_buttons[0].getRow(), " b1 col: ", self.clicked_buttons[0].getCol())
-                    # print("b1: ", self.clicked_buttons[0])
-                    # print("b2 row: ", self.clicked_buttons[1].getRow(), " b2 col: ", self.clicked_buttons[1].getCol())
-                    # print("b2: ", self.clicked_buttons[1])
-
-                    # print()
-
-                    # print(board.table[self.clicked_buttons[0].getRow()][self.clicked_buttons[0].getCol()])
-                    # print(board.table[self.clicked_buttons[1].getRow()][self.clicked_buttons[1].getCol()])
-
-                    # self.matched_buttons.extend(self.clicked_buttons)
-
-                    # board.table[self.clicked_buttons[0].getRow()][self.clicked_buttons[0].getCol()].clearTile()
-                    # board.table[self.clicked_buttons[1].getRow()][self.clicked_buttons[1].getCol()].clearTile()
-
-                    # board.table[self.clicked_buttons[0].getRow()][self.clicked_buttons[0].getCol()].disable()
-                    # board.table[self.clicked_buttons[1].getRow()][self.clicked_buttons[1].getCol()].disable()
-
                     self.clicked_buttons[0].clearTile()
                     self.clicked_buttons[1].clearTile()
 
                     self.clicked_buttons[0].disable()
                     self.clicked_buttons[1].disable()
 
+                    self.matched_buttons.append(self.clicked_buttons[0])
+                    self.matched_buttons.append(self.clicked_buttons[1])
+
                     self.clicked_buttons = []
-                    
+
+                    # if all tiles are cleared end the game.
+                    self.gameOverCondition()
+
                 # if the 2 clicked tiles don't match, flip them back over after a second
                 else:
                     QTimer.singleShot(500, self.hide_clicked_buttons)
-    
+
     def pointSystem(self, score: Score, board: MemoryBoard):
         # calculates the current score based on number of matched tiles
         score.setCurrentPoints(len(self.matched_buttons * 5))
@@ -93,5 +82,4 @@ class MemoryController(GameController):
         for button in self.clicked_buttons:
             button.flip()
             button.setEnabled(True)
-        self.clicked_buttons = [] 
-
+        self.clicked_buttons = []
