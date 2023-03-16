@@ -42,9 +42,6 @@ class MemoryController(GameController):
 
                     self.clicked_buttons = []
 
-                    # if all tiles are cleared end the game.
-                    self.gameOverCondition()
-
                 # if the 2 clicked tiles don't match, flip them back over after a second
                 else:
                     QTimer.singleShot(500, self.hide_clicked_buttons)
