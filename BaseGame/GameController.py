@@ -1,9 +1,9 @@
 from BaseGame.Board import Board
 from BaseGame.Score import Score
 
-from abc import abstractmethod
+from abc import abstractmethod, ABC
 
-class GameController:
+class GameController(ABC):
     def __init__(self):
         self.board = None
         self.score = Score() ## for tracking score
