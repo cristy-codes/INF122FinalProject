@@ -1,5 +1,6 @@
 from BaseGame.Board import Board
 from BaseGame.Score import Score
+from BaseGame.SaveScore import SaveScore
 
 from abc import abstractmethod, ABC
 
@@ -17,6 +18,11 @@ class GameController(ABC):
         self.processPlayerClick(tile, self.board)
         self.pointSystem(self.score, self.board)
         self.gameOverCondition()
+
+    # publishes score to text file
+    def save_score(self, score, gameName):
+        dialog = SaveScore(score, gameName)
+        dialog.exec_()
 
     # Modifies the board in some way once a tile is clicked
     @abstractmethod

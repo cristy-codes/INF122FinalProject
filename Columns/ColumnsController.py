@@ -3,7 +3,6 @@ from BaseGame.GameController import GameController
 from Columns.ColumnsTile import ColumnsTile
 from Columns.ColumnsBoard import ColumnsBoard
 from BaseGame.Score import Score
-from BaseGame.SaveScore import SaveScore
 from BaseGame.GameEndingMessage import GameEndingMessage
 import random
 
@@ -45,7 +44,7 @@ class ColumnsController(GameController):
           self.board.disableAllTiles()
           self.board.timer.stop()
           GameEndingMessage("You ran out of time! Your score is: " + str(self.score.getCurrentPoints()))
-          self.save_score(self.score.getCurrentPoints())
+          self.save_score(self.score.getCurrentPoints(), "COL")
           return 
       ### stop game if a column is completely full
       else:
@@ -53,7 +52,7 @@ class ColumnsController(GameController):
             if not (tile.hasEmptyTileColor()):
                 self.board.timer.stop()
                 GameEndingMessage("You ran out of room! Your score is: " + str(self.score.getCurrentPoints()))
-                self.save_score(self.score.getCurrentPoints())
+                self.save_score(self.score.getCurrentPoints(), "COL")
                 return
 
       ## generate a new set of tiles for the next queued column
@@ -66,11 +65,6 @@ class ColumnsController(GameController):
             color = random.choice(board.get_colors()[1:7])
             # set ith column tile to color
             board.column[i].setColor(color)
-
-  # publishes score to text file
-  def save_score(self, score):
-      dialog = SaveScore(score, "COL")
-      dialog.exec_()
 
 
 ### HELPER functions ###
