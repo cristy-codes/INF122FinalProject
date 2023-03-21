@@ -1,7 +1,3 @@
-import sys
-
-from PyQt5.QtWidgets import QApplication, QWidget, QDialog
-
 from BaseGame.Game import Game
 
 from Memory.MemoryBoard import MemoryBoard

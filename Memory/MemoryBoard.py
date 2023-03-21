@@ -1,6 +1,6 @@
 import random
 
-from PyQt5.QtCore import QTimer, Qt
+from PyQt5.QtCore import QTimer
 from BaseGame.Board import Board
 from Memory.MemoryTile import MemoryTile
 

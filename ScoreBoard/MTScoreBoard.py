@@ -1,6 +1,6 @@
 import sys
 
-from PyQt5.QtWidgets import QApplication, QWidget, QDialog, QVBoxLayout, QLabel
+from PyQt5.QtWidgets import QApplication, QDialog, QVBoxLayout, QLabel
 
 class MTScoreBoard(QDialog):
     def __init__(self):

@@ -1,5 +1,3 @@
-import sys
-
 from abc import abstractmethod
 from PyQt5.QtWidgets import QDialog
 
