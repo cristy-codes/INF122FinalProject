@@ -1,3 +1,7 @@
+IN4MATX 122 Team 12 - Final Group Project
+
+https://github.com/cristy-codes/INF122FinalProject
+
 To get started, follow these steps:
 
 ## System requirements
