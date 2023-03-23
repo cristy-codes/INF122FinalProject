@@ -3,7 +3,6 @@ from BaseGame.GameController import GameController
 from Columns.ColumnsTile import ColumnsTile
 from Columns.ColumnsBoard import ColumnsBoard
 from BaseGame.Score import Score
-from BaseGame.SaveScore import SaveScore
 from BaseGame.GameEndingMessage import GameEndingMessage
 import random
 
@@ -45,7 +44,7 @@ class ColumnsController(GameController):
           self.board.disableAllTiles()
           self.board.timer.stop()
           GameEndingMessage("You ran out of time! Your score is: " + str(self.score.getCurrentPoints()))
-          self.save_score(self.score.getCurrentPoints())
+          self.save_score(self.score.getCurrentPoints(), "COL")
           return 
       ### stop game if a column is completely full
       else:
@@ -53,7 +52,7 @@ class ColumnsController(GameController):
             if not (tile.hasEmptyTileColor()):
                 self.board.timer.stop()
                 GameEndingMessage("You ran out of room! Your score is: " + str(self.score.getCurrentPoints()))
-                self.save_score(self.score.getCurrentPoints())
+                self.save_score(self.score.getCurrentPoints(), "COL")
                 return
 
       ## generate a new set of tiles for the next queued column
@@ -66,11 +65,6 @@ class ColumnsController(GameController):
             color = random.choice(board.get_colors()[1:7])
             # set ith column tile to color
             board.column[i].setColor(color)
-
-  # publishes score to text file
-  def save_score(self, score):
-      dialog = SaveScore(score, "COL")
-      dialog.exec_()
 
 
 ### HELPER functions ###
@@ -91,12 +85,6 @@ def matchingAlgorithm(board: ColumnsBoard):
   while has_fallen:  # if something falls, check the board again
       has_fallen = False  # nothing has fallen this run yet
       for col in range(board.get_cols()):
-          # debug
-          # old_row_disp = ""
-          row_disp = ""
-          print(board.get_rows())
-          print(board.getTile(board.get_rows() - 1, col).getColor())
-          # debug
 
           new_board = board
 
@@ -107,8 +95,7 @@ def matchingAlgorithm(board: ColumnsBoard):
           for row in col_range:
               # old_row_disp = old_row_disp + board.getTile(row, col).getColor() + " "
               curr_board_color = board.getTile(row, col).getColor()
-              print("start check: " + curr_board_color)
-              print("row, col: " + str(row) + ", " + str(col))
+
               # check up
               if curr_board_color != "white":  # if not white
                   if row - 1 in col_range and row - 2 in col_range:  # if next two blocks in range,
@@ -116,11 +103,6 @@ def matchingAlgorithm(board: ColumnsBoard):
                                                             col).getColor():  # and if tile above matches color,
                           if curr_board_color == board.getTile(row - 2,
                                                                 col).getColor():  # if 2nd above also matches color,
-                              print("here!")
-                              # print three before turning white
-                              print(board.getTile(row, col).getColor())
-                              print(board.getTile(row - 1, col).getColor())
-                              print(board.getTile(row - 2, col).getColor())
 
                               # set scanned three to white
                               new_board.getTile(row, col).clearTile()
@@ -156,7 +138,6 @@ def matchingAlgorithm(board: ColumnsBoard):
                                                                 range(col + 3, board.get_cols(), 1), row, points)
 
                   # check diagonals
-                  print("check diagonals")
                   if col + 1 in row_range and col + 2 in row_range:  # if next two blocks diagonally in range,
                       # diag/up
                       if row - 1 in col_range and row - 2 in col_range:  # if next two blocks diag/up in range,
@@ -164,7 +145,7 @@ def matchingAlgorithm(board: ColumnsBoard):
                                                                 col + 1).getColor():  # and if diag/up matches color,
                               if curr_board_color == board.getTile(row - 2,
                                                                     col + 2).getColor():  # if 2nd diag/up also matches
-                                  print("in check diagonals")
+
                                   # set scanned three to white
                                   new_board.getTile(row, col).clearTile()
                                   new_board.getTile(row - 1, col + 1).clearTile()
@@ -204,16 +185,9 @@ def matchingAlgorithm(board: ColumnsBoard):
                                                       points, "DOWN")
 
               else:
-                  # debug
-                  print("Hit white -- ending column")
-                  #
                   # if hit white, no need to continue
                   break
-          print()
           # end column loop
-  print("New Iteration")
-  print()
-  print()
   return points, board
 
 
@@ -229,14 +203,9 @@ def remove_up(color: str, board: ColumnsBoard, new_board: ColumnsBoard, leftover
   points += EXACTLY_THREE_POINTS
 
   # start removal up
-  print("start remove up")
-  print(leftover_range)
   for remove_row in leftover_range:
-      print("in here")
-      #print("row, col: " + remove_row + " " + col + " " + board.getTile(remove_row, col).getColor())
       # if same color, continue removing
       if color == board.getTile(remove_row, col).getColor():
-          print("another one")
           new_board.getTile(remove_row, col).clearTile()
           points += MORE_THAN_THREE_POINTS
       else:
@@ -253,14 +222,10 @@ def remove_right(color: str, board: ColumnsBoard, new_board: ColumnsBoard, lefto
 
   points += EXACTLY_THREE_POINTS
 
-  print("start remove right")
   # start removal right
   for remove_col in leftover_range:
-      print("in here")
-      print(board.getTile(row, remove_col).getColor())
       # if same color, continue removing
       if color == board.getTile(row, remove_col).getColor():
-          print("another one")
           # remove & fall row
           new_board.getTile(row, remove_col).clearTile()
           fallColumn(new_board, remove_col)
@@ -280,15 +245,11 @@ def remove_diagonal(color: str, board: ColumnsBoard, new_board: ColumnsBoard, le
 
   points += EXACTLY_THREE_POINTS
 
-  print("start remove diagonal")
   # Start removing diagonally. Loop is based on cols. We subtract 3 from row to account for already processed tiles
   for remove_col in leftover_range:
-      print("in here")
-      print(board.getTile(remove_row, remove_col).getColor())
       # if same color, continue removing
       if remove_row in col_range:
             if color == board.getTile(remove_row, remove_col).getColor():
-              print("another one")
               # remove & fall row
               new_board.getTile(remove_row, remove_col).clearTile()
               fallColumn(new_board, remove_col)

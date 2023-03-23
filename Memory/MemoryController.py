@@ -1,11 +1,9 @@
-from PyQt5.QtCore import QTimer, Qt
-from PyQt5.QtWidgets import QLabel, QInputDialog
+from PyQt5.QtCore import QTimer
 
 from BaseGame.GameController import GameController
 from BaseGame.Tile import Tile
 from BaseGame.Score import Score
 from BaseGame.GameEndingMessage import GameEndingMessage
-from BaseGame.SaveScore import SaveScore
 from Memory.MemoryBoard import MemoryBoard
 
 
@@ -59,18 +57,13 @@ class MemoryController(GameController):
                 self.score.addPoints(time_remaining)
                 self.board.itemAt(1).widget().setText(str(self.score.getCurrentPoints()))
                 GameEndingMessage("You won! Your score is: " + str(self.score.getCurrentPoints()))
-                self.save_score(self.score.getCurrentPoints())
+                self.save_score(self.score.getCurrentPoints(), "MT")
         # if there is no more time left, output a "loss" and the player's score
         elif not self.board.timer.isActive():
             self.board.timer.stop()
             self.board.itemAt(1).widget().setText(str(self.score.getCurrentPoints()))
             GameEndingMessage("You ran out of time! Your score is: " + str(self.score.getCurrentPoints()))
-            self.save_score(self.score.getCurrentPoints())
-
-    # publishes score to text file
-    def save_score(self, score):
-        dialog = SaveScore(score, "MT")
-        dialog.exec_()
+            self.save_score(self.score.getCurrentPoints(), "MT")
 
     # hide the clicked buttons and stop tracking them
     def hide_clicked_buttons(self):
